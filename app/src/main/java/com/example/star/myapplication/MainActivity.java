@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view){
                 AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
                 dlg.setTitle("회원정보");
-                dlg.setMessage("회원정보입니다.");
+                dlg.setMessage("회원정보입니다. ");
                 dlg.setIcon(R.drawable.icon);
                 dlg.setPositiveButton("확인", null);
                 dlg.show();
