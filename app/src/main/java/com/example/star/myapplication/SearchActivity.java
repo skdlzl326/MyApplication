@@ -8,7 +8,7 @@ public class SearchActivity extends MainActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search);
+        setContentView(R.layout.activity_search);
 
         ImageView btnReturn = (ImageView) findViewById(R.id.btnReturn);
         btnReturn.setOnClickListener(new View.OnClickListener(){

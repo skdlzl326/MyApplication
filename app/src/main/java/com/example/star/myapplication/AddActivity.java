@@ -8,7 +8,7 @@ public class AddActivity extends MainActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add);
+        setContentView(R.layout.activity_add);
 
         ImageView btnReturn = (ImageView) findViewById(R.id.btnReturn);
         btnReturn.setOnClickListener(new View.OnClickListener(){
