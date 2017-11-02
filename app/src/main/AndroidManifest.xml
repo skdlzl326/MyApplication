@@ -27,6 +27,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".JoinActivity" android:label="JoinActivity" />
+        <activity android:name=".MainActivity" android:label="MainActivity" />
         <activity android:name=".ReviewActivity" android:label="ReviewActivity" />
         <activity android:name=".AddActivity" android:label="AddActivity" />
         <activity android:name=".SearchActivity" android:label="SearchActivity" />
