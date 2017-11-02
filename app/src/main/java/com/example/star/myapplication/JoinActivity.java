@@ -6,13 +6,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class JoinActivity extends MainActivity{
+    final static String TAG = "AndroidNodeJS";
 
     private EditText etId;
     private EditText etPassword;
@@ -21,6 +26,7 @@ public class JoinActivity extends MainActivity{
     private EditText etName;
     private Button btnDone;
     private Button btnCancel;
+    private String Gender = "";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +37,7 @@ public class JoinActivity extends MainActivity{
         etPasswordConfirm = (EditText) findViewById(R.id.etPasswordConfirm);
         etNick = (EditText) findViewById(R.id.etNickname);
         etName = (EditText) findViewById(R.id.etName);
+
         btnDone = (Button) findViewById(R.id.btnDone);
         btnCancel = (Button) findViewById(R.id.btnCancel);
 
@@ -69,7 +76,7 @@ public class JoinActivity extends MainActivity{
 
                 // 아이디 입력 확인
                 if( etId.getText().toString().length() == 0 ) {
-                    Toast.makeText(JoinActivity.this, "Id을 입력하세요!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JoinActivity.this, "아이디를 입력하세요!", Toast.LENGTH_SHORT).show();
                     etId.requestFocus();
                     return;
                 }
@@ -83,7 +90,7 @@ public class JoinActivity extends MainActivity{
 
                 // 비밀번호 확인 입력 확인
                 if( etPasswordConfirm.getText().toString().length() == 0 ) {
-                    Toast.makeText(JoinActivity.this, "비밀번호 확인을 입력하세요!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JoinActivity.this, "'비밀번호 확인'을 입력하세요!", Toast.LENGTH_SHORT).show();
                     etPasswordConfirm.requestFocus();
                     return;
                 }
@@ -108,15 +115,28 @@ public class JoinActivity extends MainActivity{
                     etNick.requestFocus();
                     return;
                 }
-                String Gender = "";
+
                 if(cb1.isChecked() == true) Gender += cb1.getText().toString();
                 if(cb2.isChecked() == true) Gender += cb2.getText().toString();
 
                 if( Gender.length() == 0 ) {
-                    Toast.makeText(JoinActivity.this, "성별을 골라주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JoinActivity.this, "성별을 골라주세요!", Toast.LENGTH_SHORT).show();
                     cb1.requestFocus();
                     return;
                 }
+
+                JSONObject postDataParam = new JSONObject();
+                try {
+                    postDataParam.put("id", etId.getText().toString());
+                    postDataParam.put("password", etPassword.getText().toString());
+                    postDataParam.put("nickname", etNick.getText().toString());
+                    postDataParam.put("name", etName.getText().toString());
+                    postDataParam.put("sex", Gender);
+                } catch (JSONException e) {
+                    Log.e(TAG, "JSONEXception");
+                }
+                new InsertData(JoinActivity.this).execute(postDataParam);
+                new GetData(JoinActivity.this).execute();
 
                 Intent result = new Intent();
                 result.putExtra("ID", etId.getText().toString());
