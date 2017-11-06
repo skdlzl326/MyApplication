@@ -43,7 +43,6 @@ public class PostRequest extends AsyncTask<JSONObject, Void, String> {
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));
             String str = getPostDataString(postDataParams[0]);
-            Log.e("params", "Post String = " + str);
             writer.write(str);
 
             writer.flush();

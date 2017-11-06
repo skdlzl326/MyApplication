@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         if(requestCode == 1000 && resultCode == RESULT_OK) {
             Toast.makeText(LoginActivity.this, "회원가입을 완료했습니다!", Toast.LENGTH_SHORT).show();
 
+
             etId.setText(data.getStringExtra("ID"));
         }
     }

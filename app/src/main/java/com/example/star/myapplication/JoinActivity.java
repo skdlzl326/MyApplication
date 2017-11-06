@@ -4,6 +4,7 @@ package com.example.star.myapplication;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,7 +17,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JoinActivity extends MainActivity{
+public class JoinActivity extends AppCompatActivity {
     final static String TAG = "AndroidNodeJS";
 
     private EditText etId;
@@ -74,6 +75,9 @@ public class JoinActivity extends MainActivity{
             @Override
             public void onClick(View v) {
 
+                if(cb1.isChecked() == true) Gender += cb1.getText().toString();
+                if(cb2.isChecked() == true) Gender += cb2.getText().toString();
+
                 // 아이디 입력 확인
                 if( etId.getText().toString().length() == 0 ) {
                     Toast.makeText(JoinActivity.this, "아이디를 입력하세요!", Toast.LENGTH_SHORT).show();
@@ -82,21 +86,21 @@ public class JoinActivity extends MainActivity{
                 }
 
                 // 비밀번호 입력 확인
-                if( etPassword.getText().toString().length() == 0 ) {
+                else if( etPassword.getText().toString().length() == 0 ) {
                     Toast.makeText(JoinActivity.this, "비밀번호를 입력하세요!", Toast.LENGTH_SHORT).show();
                     etPassword.requestFocus();
                     return;
                 }
 
                 // 비밀번호 확인 입력 확인
-                if( etPasswordConfirm.getText().toString().length() == 0 ) {
+                else if( etPasswordConfirm.getText().toString().length() == 0 ) {
                     Toast.makeText(JoinActivity.this, "'비밀번호 확인'을 입력하세요!", Toast.LENGTH_SHORT).show();
                     etPasswordConfirm.requestFocus();
                     return;
                 }
 
                 // 비밀번호 일치 확인
-                if( !etPassword.getText().toString().equals(etPasswordConfirm.getText().toString()) ) {
+                else if( !etPassword.getText().toString().equals(etPasswordConfirm.getText().toString()) ) {
                     Toast.makeText(JoinActivity.this, "비밀번호가 일치하지 않습니다!", Toast.LENGTH_SHORT).show();
                     etPassword.setText("");
                     etPasswordConfirm.setText("");
@@ -104,27 +108,23 @@ public class JoinActivity extends MainActivity{
                     return;
                 }
 
-                if( etName.getText().toString().length() == 0 ) {
+                else if( etName.getText().toString().length() == 0 ) {
                     Toast.makeText(JoinActivity.this, "이름을 입력하세요!", Toast.LENGTH_SHORT).show();
                     etName.requestFocus();
                     return;
                 }
 
-                if( etNick.getText().toString().length() == 0 ) {
+                else if( etNick.getText().toString().length() == 0 ) {
                     Toast.makeText(JoinActivity.this, "닉네임을 입력하세요!", Toast.LENGTH_SHORT).show();
                     etNick.requestFocus();
                     return;
                 }
 
-                if(cb1.isChecked() == true) Gender += cb1.getText().toString();
-                if(cb2.isChecked() == true) Gender += cb2.getText().toString();
-
-                if( Gender.length() == 0 ) {
+                else if( Gender.length() == 0 ) {
                     Toast.makeText(JoinActivity.this, "성별을 골라주세요!", Toast.LENGTH_SHORT).show();
                     cb1.requestFocus();
                     return;
                 }
-
                 JSONObject postDataParam = new JSONObject();
                 try {
                     postDataParam.put("id", etId.getText().toString());
@@ -136,7 +136,8 @@ public class JoinActivity extends MainActivity{
                     Log.e(TAG, "JSONEXception");
                 }
                 new InsertData(JoinActivity.this).execute(postDataParam);
-                new GetData(JoinActivity.this).execute();
+                //new GetData(JoinActivity.this).execute();
+
 
                 Intent result = new Intent();
                 result.putExtra("ID", etId.getText().toString());

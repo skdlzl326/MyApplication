@@ -1,7 +1,6 @@
 package com.example.star.myapplication;
 
 import android.app.Activity;
-import android.widget.EditText;
 
 import java.net.MalformedURLException;
 import java.net.URL;
