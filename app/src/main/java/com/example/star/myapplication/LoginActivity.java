@@ -13,6 +13,7 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etId;
+    private EditText etNickname;
     private Button btnRegist;
     private Button btnLogin;
 
@@ -22,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         etId = (EditText) findViewById(R.id.etId);
+
         btnRegist = (Button) findViewById(R.id.btnRegist);
         btnLogin =  (Button) findViewById(R.id.btnLogin);
         btnRegist.setOnClickListener(new View.OnClickListener(){
@@ -36,7 +38,10 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v){
+
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                intent.putExtra("id", etId.getText().toString());
+               // intent.putExtra("nickname", etNickname.getText().toString());
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
                 startActivityForResult(intent,1000);

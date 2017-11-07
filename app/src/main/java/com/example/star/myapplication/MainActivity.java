@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         ImageView f1 = (ImageView)findViewById(R.id.f1);
         f1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,9 +65,10 @@ public class MainActivity extends AppCompatActivity {
         ImageView nt = (ImageView)findViewById(R.id.notice);
         nt.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
+
                 AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
                 dlg.setTitle("회원정보");
-                dlg.setMessage("회원정보입니다  ");
+              //  dlg.setMessage(id + " 님 환영합니다.");
                 dlg.setIcon(R.drawable.icon);
                 dlg.setPositiveButton("확인", null);
                 dlg.show();
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView imgsearch = (ImageView) findViewById(R.id.imgsearch);
         imgsearch.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(),SearchActivity.class);
+                Intent intent = new Intent(getApplicationContext(),TestActivity.class);
                 startActivity(intent);
             }
         });
