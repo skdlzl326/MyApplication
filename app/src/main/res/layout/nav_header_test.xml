@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Android Studio"
+        android:text="리뷰 0 | 사진 0"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 

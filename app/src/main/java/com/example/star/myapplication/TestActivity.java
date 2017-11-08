@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.view.MenuInflater;
 import android.view.View;
@@ -21,33 +23,27 @@ import android.widget.TextView;
 public class TestActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     //private EditText etId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //getWindow().setStatusBarColor();
         setContentView(R.layout.activity_test);
-
         /*TextView textView = (TextView)findViewById(R.id.profile);
         etId = (EditText) findViewById(R.id.etId);
         textView.setText(etId.getText().toString());*/
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        /*final ActionBar actionBar = getSupportActionBar();
-        actionBar.setCustomView(R.layout.app_bar_test);
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
-
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        setFragment(new dataFragment());
 
     }
 
@@ -87,10 +83,10 @@ public class TestActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
             startActivityForResult(intent,1000);
 
         } else if (id == R.id.nav_wishlist) {
+            setFragment(new dataFragment());
 
         } else if (id == R.id.nav_notify) {
 
@@ -104,5 +100,14 @@ public class TestActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void setFragment(Fragment fragment){
+        if(fragment!=null){
+            FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_test,fragment);
+            ft.commit();
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
     }
 }
