@@ -27,18 +27,19 @@ public class TestActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getWindow().setStatusBarColor();
         setContentView(R.layout.activity_test);
+
         /*TextView textView = (TextView)findViewById(R.id.profile);
         etId = (EditText) findViewById(R.id.etId);
         textView.setText(etId.getText().toString());*/
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle); //set > add
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -89,6 +90,7 @@ public class TestActivity extends AppCompatActivity
             setFragment(new dataFragment());
 
         } else if (id == R.id.nav_notify) {
+            //setFragment(new gpsFragment());
 
         } else if (id == R.id.nav_logout) {
             Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
@@ -97,8 +99,7 @@ public class TestActivity extends AppCompatActivity
             startActivityForResult(intent,1000);
 
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
     public void setFragment(Fragment fragment){

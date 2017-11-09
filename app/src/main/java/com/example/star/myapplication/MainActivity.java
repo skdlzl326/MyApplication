@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ImageView nt = (ImageView)findViewById(R.id.notice);
+       /* ImageView nt = (ImageView)findViewById(R.id.notice);
         nt.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
 
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 dlg.setPositiveButton("확인", null);
                 dlg.show();
             }
-        });
+        });*/
 
 
         ImageView imgsearch = (ImageView) findViewById(R.id.imgsearch);

@@ -33,6 +33,7 @@ public class dataFragment extends Fragment {
                 tabLayout.setupWithViewPager(viewPager);
             }
         });
+        //tabLayout.setupWithViewPager(viewPager);
 
         return view;
     }
@@ -45,7 +46,13 @@ public class dataFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            return new contentFragment();
+
+            switch (position){
+                case 0:return new gpsFragment();
+                case 1:return new contentFragment();
+                case 2:return new contentFragment();
+            }
+                return null;
         }
 
         @Override
