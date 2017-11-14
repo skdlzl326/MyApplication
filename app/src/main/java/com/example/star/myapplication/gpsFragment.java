@@ -40,6 +40,7 @@ import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -102,7 +103,6 @@ public class gpsFragment extends Fragment
             this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
             return;
         }
-/*
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(DEFAULT_LOCATION);
         markerOptions.title(markerTitle);
@@ -111,14 +111,13 @@ public class gpsFragment extends Fragment
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         currentMarker = this.googleMap.addMarker(markerOptions);
 
-        this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(DEFAULT_LOCATION));*/
+        this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(DEFAULT_LOCATION));
     }
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
     }
 
@@ -129,23 +128,39 @@ public class gpsFragment extends Fragment
 
         mapView = (MapView)layout.findViewById(R.id.map);
         mapView.getMapAsync(this);
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
-                getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+        SupportPlaceAutocompleteFragment autocompleteFragment = (SupportPlaceAutocompleteFragment)
+                getActivity().getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+        if(autocompleteFragment==null) {
+            autocompleteFragment = (SupportPlaceAutocompleteFragment) SupportPlaceAutocompleteFragment.instantiate(getContext(),
+                    "com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment");
+            autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                @Override
+                public void onPlaceSelected(Place place) {
+                    Log.i("", "Place: " + place.getName());//get place details here
+                }
 
-            public void onPlaceSelected(Place place) {
-                Location location = new Location("");
-                location.setLatitude(place.getLatLng().latitude);
-                location.setLongitude(place.getLatLng().longitude);
+                @Override
+                public void onError(Status status) {
+                    Toast.makeText(getActivity(), "ㅇㅇㅇㅇㅇ111", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+            autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                @Override
+                public void onPlaceSelected(Place place) {
+                    // TODO: Get info about the selected place.
+                    Log.i("", "Place: " + place.getName());
+                }
 
-                setCurrentLocation(location, place.getName().toString(), place.getAddress().toString());
-            }
+                @Override
+                public void onError(Status status) {
+                    // TODO: Handle the error.
+                    Log.i("", "An error occurred: " + status);
+                    Toast.makeText(getActivity(), "ㅇㅇㅇㅇㅇ222", Toast.LENGTH_LONG).show();
+                }
+            });
 
-            public void onError(Status status) {
-                Log.i(TAG, "An error occurred: " + status);
-            }
-        });
 
         return layout;
     }
@@ -159,7 +174,6 @@ public class gpsFragment extends Fragment
     @Override
     public void onStop() {
         super.onStop();
-        mapView.onStop();
         mapView.onStop();
 
         if ( googleApiClient != null && googleApiClient.isConnected())
@@ -326,8 +340,8 @@ public class gpsFragment extends Fragment
 
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(UPDATE_INTERVAL_MS);
-        locationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
+        /*locationRequest.setInterval(UPDATE_INTERVAL_MS);
+        locationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);*/
 
         if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if ( ActivityCompat.checkSelfPermission(getActivity(),
@@ -370,7 +384,7 @@ public class gpsFragment extends Fragment
     public void onLocationChanged(Location location) {
         /*Log.i(TAG, "onLocationChanged call..");
         searchCurrentPlaces();*/
-        String markerTitle = getCurrentAddress(location);
+         String markerTitle = getCurrentAddress(location);
          String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
                  + " 경도:" + String.valueOf(location.getLongitude());
 
