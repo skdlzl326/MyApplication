@@ -2,21 +2,19 @@ package com.example.star.myapplication;
 
 
 public class Book {
-    String id;
+    String username;
     String password;
-    String name;
     String nickname;
-    String sex;
+    String gender;
 
-    public Book(String id, String password, String name, String nickname, String sex) {
-        this.id = id;
+    public Book(String username, String password, String nickname, String gender) {
+        this.username = username;
         this.password = password;
-        this.name = name;
         this.nickname = nickname;
-        this.sex = sex;
+        this.gender = gender;
     }
 
     public String toString() {
-        return String.format("ID = %s \n Nickname = %s",id,id, nickname);
+        return String.format("ID = %s \n Nickname = %s",username,nickname);
     }
 }

@@ -24,6 +24,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -31,9 +33,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+/*import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;*/
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
@@ -68,17 +74,17 @@ public class gpsFragment extends Fragment
     private static final String TAG = "googlemap_example";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 2002;
-    private static final int UPDATE_INTERVAL_MS = 40000; //15000
-    private static final int FASTEST_UPDATE_INTERVAL_MS = 15000;
+   /* private static final int UPDATE_INTERVAL_MS = 40000; //15000
+    private static final int FASTEST_UPDATE_INTERVAL_MS = 15000;*/
     private MapView mapView = null;
     private GoogleMap googleMap = null;
     private GoogleApiClient googleApiClient = null;
     private Marker currentMarker = null;
     private final static int MAXENTRIES = 5;
-    private String[] LikelyPlaceNames = null;
+   /* private String[] LikelyPlaceNames = null;
     private String[] LikelyAddresses = null;
     private String[] LikelyAttributions = null;
-    private LatLng[] LikelyLatLngs = null;
+    private LatLng[] LikelyLatLngs = null;*/
 
 
     public gpsFragment()
@@ -121,17 +127,42 @@ public class gpsFragment extends Fragment
 
     }
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_gps, container, false);
+        Button btn = (Button) layout.findViewById(R.id.button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+        EditText location_tf = (EditText)getView().findViewById(R.id.TFaddress);
+        String location = location_tf.getText().toString();
+        List<Address> addressList = null;
+        if (location != null || !location.equals("")) {
+            Geocoder geocoder = new Geocoder(getActivity()); //this
+            try {
+                addressList = geocoder.getFromLocationName(location, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Address address = addressList.get(0);
+            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+            googleMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        }
+            }
+        });
+
 
         mapView = (MapView)layout.findViewById(R.id.map);
         mapView.getMapAsync(this);
-        SupportPlaceAutocompleteFragment autocompleteFragment = (SupportPlaceAutocompleteFragment)
+        /*SupportPlaceAutocompleteFragment autocompleteFragment = (SupportPlaceAutocompleteFragment)
                 getActivity().getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
-        if(autocompleteFragment==null) {
+        if(autocompleteFragment==null){
             autocompleteFragment = (SupportPlaceAutocompleteFragment) SupportPlaceAutocompleteFragment.instantiate(getContext(),
                     "com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment");
             autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -142,10 +173,10 @@ public class gpsFragment extends Fragment
 
                 @Override
                 public void onError(Status status) {
-                    Toast.makeText(getActivity(), "ㅇㅇㅇㅇㅇ111", Toast.LENGTH_LONG).show();
+
                 }
             });
-        }
+
             autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
                 @Override
                 public void onPlaceSelected(Place place) {
@@ -157,12 +188,37 @@ public class gpsFragment extends Fragment
                 public void onError(Status status) {
                     // TODO: Handle the error.
                     Log.i("", "An error occurred: " + status);
-                    Toast.makeText(getActivity(), "ㅇㅇㅇㅇㅇ222", Toast.LENGTH_LONG).show();
                 }
             });
+        }
+*/
+/*
+
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                Location location = new Location("");
+                location.setLatitude(place.getLatLng().latitude);
+                location.setLongitude(place.getLatLng().longitude);
+
+                setCurrentLocation(location, place.getName().toString(), place.getAddress().toString());
+            }
+
+            @Override
+            public void onError(Status status) {
+                Toast.makeText(getActivity(), "검색창 오류", Toast.LENGTH_LONG).show();
+                Log.i(TAG, "An error occurred: " + status);
+            }
+        });
+*/
+
 
 
         return layout;
+
     }
 
     @Override
@@ -195,6 +251,7 @@ public class gpsFragment extends Fragment
         if ( googleApiClient != null)
             googleApiClient.connect();
     }
+
 
     @Override
     public void onPause() {
@@ -236,8 +293,6 @@ public class gpsFragment extends Fragment
         fragmentTransaction.remove(fragment);
         fragmentTransaction.commit();
     }*/
-
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

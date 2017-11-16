@@ -86,14 +86,14 @@ public class MainActivity extends AppCompatActivity {
         ImageView imgreview = (ImageView) findViewById(R.id.imgreview);
         imgreview.setOnClickListener( new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(),ReviewActivity.class);
+                Intent intent = new Intent(getApplicationContext(),TestActivity.class);
                 startActivity(intent);
             }
         });
         ImageView imgadd = (ImageView) findViewById(R.id.imgadd);
         imgadd.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(),AddActivity.class);
+                Intent intent = new Intent(getApplicationContext(),TestActivity.class);
                 startActivity(intent);
             }
         });

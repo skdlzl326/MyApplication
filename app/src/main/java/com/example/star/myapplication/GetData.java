@@ -29,6 +29,19 @@ public class GetData extends GetRequest {
         }
     }
 
+    protected void onPostExecute(String jsonString) {
+        if (jsonString == null)
+            return;
+        ArrayList<Book> arrayList = getArrayListFromJSONString(jsonString);
+
+        ArrayAdapter adapter = new ArrayAdapter(activity,
+                android.R.layout.simple_list_item_1,
+                arrayList.toArray());
+        ListView txtList = (ListView)activity.findViewById(R.id.txtList);
+        txtList.setAdapter(adapter);
+        txtList.setDividerHeight(10);
+    }
+
     protected ArrayList<Book> getArrayListFromJSONString(String jsonString) {
         ArrayList<Book> output = new ArrayList();
         try {
@@ -39,11 +52,10 @@ public class GetData extends GetRequest {
 
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
 
-                Book book = new Book(jsonObject.getString("id"),
+                Book book = new Book(jsonObject.getString("username"),
                         jsonObject.getString("password"),
-                        jsonObject.getString("name"),
                         jsonObject.getString("nickname"),
-                        jsonObject.getString("sex"));
+                        jsonObject.getString("gender"));
 
                 output.add(book);
             }

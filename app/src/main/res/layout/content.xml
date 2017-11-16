@@ -1,38 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ScrollView
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:layout_weight="1">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="true"
-        android:layout_weight="1">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:gravity="center"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:text="음식" />-->
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/food7" />
+            android:src="@drawable/food7"
+            android:layout_weight="1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#111111"
-            android:text="H. G. 웰스부터 에드거 라이스 버로스, 레이 브래드버리, 필립 K. 딕 등에 이르기까지 미지의 행성
-            ‘화성’은 수많은 작가들에게 상상력의 원천이자 영감이 되어왔다. 그리고 오늘날 다시 한 번 화성에서 조난당한
-            한 남자에 대한 이야기로 전 세계적인 열풍을 일으키고 있는 작품이 있으니, 바로 이 책
-            《마션-어느 괴짜 과학자의 화성판 어드벤처 생존기》이다. 컴퓨터 프로그래머 출신인 작가 앤디
-            위어가 2009년 취미 삼아 개인 블로그에 연재를 시작했던 《마션》은 독자들의 요청으로 2011년
-            아마존 킨들 버전으로 자비 출판되었고, 이후 한 문학 에이전트의 눈에 띄어 미국의 중견 출판사
-            크라운 사에서 정식 출판되었다. “지난 수십 년을 통틀어 이토록 잘 읽히는 소설은 처음이다”,
-            “21세기 과학적 지식이 빛을 발하는 스릴 넘치고 흥미진진한 이야기”라는 언론의 호평이 쏟아졌던
-            《마션》은 출간 즉시 뉴욕타임스 소설 부문 베스트셀러 순위권에 12주 연속 머물렀고, 1년도 채 안 된
-            오늘날 뉴욕타임스 소설 부문 베스트셀러 상위권에 37주 연속 재진입하고 있어 화제가 되고 있다. " />
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+            android:textColor="#ffffff"
+            android:layout_alignBottom="@id/imageView"
+            android:layout_alignLeft="@id/imageView"
+            android:layout_alignRight="@id/imageView"
+            android:layout_alignTop="@id/imageView"
+            android:gravity="center"
+            android:text="미국식 음식" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/food6"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:layout_alignBottom="@id/imageView2"
+            android:layout_alignLeft="@id/imageView2"
+            android:layout_alignRight="@id/imageView2"
+            android:layout_alignTop="@id/imageView2"
+            android:gravity="center"
+            android:text="멕시코식 음식" />
+    </LinearLayout>
+</ScrollView>
