@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:background="#ffffff"
             app:layout_collapseMode="pin"
-            app:layout_scrollFlags="enterAlways|scroll">
+            app:layout_scrollFlags="enterAlways">
 
             <ImageView
                 android:layout_width="wrap_content"
