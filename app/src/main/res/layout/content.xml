@@ -1,55 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true"
     android:layout_weight="1">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:background="#ffffff"
         android:orientation="vertical">
-        <!--<TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:gravity="center"
-            android:textSize="12dp"
-            android:textStyle="bold"
-            android:text="음식" />-->
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/food7"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:layout_alignBottom="@id/imageView"
-            android:layout_alignLeft="@id/imageView"
-            android:layout_alignRight="@id/imageView"
-            android:layout_alignTop="@id/imageView"
-            android:gravity="center"
-            android:text="미국식 음식" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/food6"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:layout_alignBottom="@id/imageView2"
-            android:layout_alignLeft="@id/imageView2"
-            android:layout_alignRight="@id/imageView2"
-            android:layout_alignTop="@id/imageView2"
-            android:gravity="center"
-            android:text="멕시코식 음식" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="1dp"
+            android:layout_marginTop="1dp">
+
+            <ImageView
+                android:id="@+id/f1"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                android:src="@drawable/food2" />
+
+            <ImageView
+                android:id="@+id/f22"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                android:src="@drawable/food3" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/f2"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_weight="1"
+                android:paddingRight="1dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/food2" />
+
+            <ImageView
+                android:id="@+id/f3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                android:src="@drawable/food4" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/f4"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                android:src="@drawable/food6" />
+
+            <ImageView
+                android:id="@+id/f5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="1dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/food7" />
+        </LinearLayout>
+
     </LinearLayout>
+
 </ScrollView>
+</LinearLayout>

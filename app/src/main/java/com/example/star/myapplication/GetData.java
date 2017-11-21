@@ -1,9 +1,11 @@
 package com.example.star.myapplication;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,6 +14,7 @@ import org.json.JSONObject;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class GetData extends GetRequest {
@@ -39,8 +42,11 @@ public class GetData extends GetRequest {
                 arrayList.toArray());
         ListView txtList = (ListView)activity.findViewById(R.id.txtList);
         txtList.setAdapter(adapter);
-        txtList.setDividerHeight(10);
+        txtList.getAdapter();
+        Intent intent = new Intent(activity,LoginActivity.class);
+        intent.putExtra("user",arrayList.get(0).username);
     }
+
 
     protected ArrayList<Book> getArrayListFromJSONString(String jsonString) {
         ArrayList<Book> output = new ArrayList();
@@ -59,10 +65,15 @@ public class GetData extends GetRequest {
 
                 output.add(book);
             }
+
         } catch (JSONException e) {
             Log.e(TAG, "Exception in processing JSONString.", e);
             e.printStackTrace();
         }
         return output;
+
     }
+
+
+
 }

@@ -1,7 +1,9 @@
 package com.example.star.myapplication;
 
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable{
     String username;
     String password;
     String nickname;
@@ -15,6 +17,6 @@ public class Book {
     }
 
     public String toString() {
-        return String.format("ID = %s \n Nickname = %s",username,nickname);
+        return String.format("%s\n%s\n%s\n%s",username,nickname,password,gender);
     }
 }

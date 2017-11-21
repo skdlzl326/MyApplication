@@ -24,7 +24,6 @@ public class JoinActivity extends AppCompatActivity {
     private EditText etPassword;
     private EditText etPasswordConfirm;
     private EditText etNick;
-    /*private EditText etName;*/
     private Button btnDone;
     private Button btnCancel;
     private String Gender = "";
@@ -37,7 +36,6 @@ public class JoinActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPassword);
         etPasswordConfirm = (EditText) findViewById(R.id.etPasswordConfirm);
         etNick = (EditText) findViewById(R.id.etNickname);
-        /*etName = (EditText) findViewById(R.id.etName);*/
 
         btnDone = (Button) findViewById(R.id.btnDone);
         btnCancel = (Button) findViewById(R.id.btnCancel);
@@ -45,23 +43,6 @@ public class JoinActivity extends AppCompatActivity {
         final CheckBox cb1 = (CheckBox)findViewById(R.id.etSex1);
         final CheckBox cb2 = (CheckBox)findViewById(R.id.etSex2);
 
-       /* etPasswordConfirm.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String password = etPassword.getText().toString();
-                String confirm = etPasswordConfirm.getText().toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });*/
 
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,12 +81,6 @@ public class JoinActivity extends AppCompatActivity {
                     return;
                 }
 
-                /*else if( etName.getText().toString().length() == 0 ) {
-                    Toast.makeText(JoinActivity.this, "이름을 입력하세요!", Toast.LENGTH_SHORT).show();
-                    etName.requestFocus();
-                    return;
-                }*/
-
                 else if( etNick.getText().toString().length() == 0 ) {
                     Toast.makeText(JoinActivity.this, "닉네임을 입력하세요!", Toast.LENGTH_SHORT).show();
                     etNick.requestFocus();
@@ -122,13 +97,12 @@ public class JoinActivity extends AppCompatActivity {
                     postDataParam.put("username", etId.getText().toString());
                     postDataParam.put("password", etPassword.getText().toString());
                     postDataParam.put("nickname", etNick.getText().toString());
-                    /*postDataParam.put("name", etName.getText().toString());*/
                     postDataParam.put("gender", Gender);
                 } catch (JSONException e) {
                     Log.e(TAG, "JSONEXception");
                 }
                 new InsertData(JoinActivity.this).execute(postDataParam);
-                //new GetData(JoinActivity.this).execute(); //db생성 전이라 구현 안함
+                new GetData(JoinActivity.this).execute();
 
 
                 Intent result = new Intent();

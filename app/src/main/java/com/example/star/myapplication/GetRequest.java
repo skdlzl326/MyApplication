@@ -70,4 +70,5 @@ abstract public class GetRequest extends AsyncTask<String, Void, String> {
         return output.toString();
     }
 
+
 }

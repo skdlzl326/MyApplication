@@ -8,11 +8,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etId;
+    private ArrayList<Book> arraylist;
+    private ListView list;
     private EditText etNickname;
     private Button btnRegist;
     private Button btnLogin;
@@ -21,9 +27,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        new GetData(LoginActivity.this).execute();
+        list = (ListView)findViewById(R.id.txtList);
 
         etId = (EditText) findViewById(R.id.etId);
-
         btnRegist = (Button) findViewById(R.id.btnRegist);
         btnLogin =  (Button) findViewById(R.id.btnLogin);
         btnRegist.setOnClickListener(new View.OnClickListener(){
@@ -40,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v){
 
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                intent.putExtra("id", etId.getText().toString());
+                //intent.putExtra("id", etId.getText().toString());
                // intent.putExtra("nickname", etNickname.getText().toString());
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
@@ -57,12 +64,17 @@ public class LoginActivity extends AppCompatActivity {
         Log.d("RESULT", requestCode + "");
         Log.d("RESULT", resultCode + "");
         Log.d("RESULT", data + "");
+       /* for (int i=0;i<)*/
 
+        String st = list.getAdapter().getItem(7).toString();
+        String[] arr = st.split("\n");
+        Toast.makeText(this, arr[0], Toast.LENGTH_SHORT).show();
         if(requestCode == 1000 && resultCode == RESULT_OK) {
             Toast.makeText(LoginActivity.this, "회원가입을 완료했습니다!", Toast.LENGTH_SHORT).show();
-
-
             etId.setText(data.getStringExtra("ID"));
+           /*
+            Toast.makeText(this, list.getAdapter().getItem(0).toString(), Toast.LENGTH_SHORT).show();*/
+
         }
     }
 

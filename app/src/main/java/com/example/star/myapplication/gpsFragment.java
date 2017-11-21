@@ -107,6 +107,7 @@ public class gpsFragment extends Fragment
             currentMarker = this.googleMap.addMarker(markerOptions);
 
             this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+
             return;
         }
         MarkerOptions markerOptions = new MarkerOptions();
@@ -153,69 +154,16 @@ public class gpsFragment extends Fragment
             googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
 
         }
+        else{
+            Toast.makeText(getActivity(), "다시 입력해주세요", Toast.LENGTH_LONG).show();
+        }
+
             }
         });
 
 
         mapView = (MapView)layout.findViewById(R.id.map);
         mapView.getMapAsync(this);
-        /*SupportPlaceAutocompleteFragment autocompleteFragment = (SupportPlaceAutocompleteFragment)
-                getActivity().getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-
-        if(autocompleteFragment==null){
-            autocompleteFragment = (SupportPlaceAutocompleteFragment) SupportPlaceAutocompleteFragment.instantiate(getContext(),
-                    "com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment");
-            autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-                @Override
-                public void onPlaceSelected(Place place) {
-                    Log.i("", "Place: " + place.getName());//get place details here
-                }
-
-                @Override
-                public void onError(Status status) {
-
-                }
-            });
-
-            autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-                @Override
-                public void onPlaceSelected(Place place) {
-                    // TODO: Get info about the selected place.
-                    Log.i("", "Place: " + place.getName());
-                }
-
-                @Override
-                public void onError(Status status) {
-                    // TODO: Handle the error.
-                    Log.i("", "An error occurred: " + status);
-                }
-            });
-        }
-*/
-/*
-
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
-                getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                Location location = new Location("");
-                location.setLatitude(place.getLatLng().latitude);
-                location.setLongitude(place.getLatLng().longitude);
-
-                setCurrentLocation(location, place.getName().toString(), place.getAddress().toString());
-            }
-
-            @Override
-            public void onError(Status status) {
-                Toast.makeText(getActivity(), "검색창 오류", Toast.LENGTH_LONG).show();
-                Log.i(TAG, "An error occurred: " + status);
-            }
-        });
-*/
-
-
 
         return layout;
 
@@ -476,43 +424,6 @@ public class gpsFragment extends Fragment
          }
 
 
-    /*private void searchCurrentPlaces() {
-        @SuppressWarnings("MissingPermission")
-        PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi
-                .getCurrentPlace(googleApiClient, null);
-        result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>(){
-
-
-            public void onResult(@NonNull PlaceLikelihoodBuffer placeLikelihoods) {
-                int i = 0;
-                LikelyPlaceNames = new String[MAXENTRIES];
-                LikelyAddresses = new String[MAXENTRIES];
-                LikelyAttributions = new String[MAXENTRIES];
-                LikelyLatLngs = new LatLng[MAXENTRIES];
-
-                for(PlaceLikelihood placeLikelihood : placeLikelihoods) {
-                    LikelyPlaceNames[i] = (String) placeLikelihood.getPlace().getName();
-                    LikelyAddresses[i] = (String) placeLikelihood.getPlace().getAddress();
-                    LikelyAttributions[i] = (String) placeLikelihood.getPlace().getAttributions();
-                    LikelyLatLngs[i] = placeLikelihood.getPlace().getLatLng();
-
-                    i++;
-                    if(i > MAXENTRIES - 1 ) {
-                        break;
-                    }
-                }
-
-                placeLikelihoods.release();
-
-                Location location = new Location("");
-                location.setLatitude(LikelyLatLngs[0].latitude);
-                location.setLongitude(LikelyLatLngs[0].longitude);
-
-                setCurrentLocation(location, LikelyPlaceNames[0], LikelyAddresses[0]);
-            }
-        });
-
-    }*/
 
 
 
