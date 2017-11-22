@@ -17,6 +17,6 @@ public class Book implements Serializable{
     }
 
     public String toString() {
-        return String.format("%s\n%s\n%s\n%s",username,nickname,password,gender);
+        return String.format("%s\n%s\n%s\n%s",username,password,nickname,gender);
     }
 }
