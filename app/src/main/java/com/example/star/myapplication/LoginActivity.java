@@ -28,8 +28,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         new GetData(LoginActivity.this).execute();
-        list = (ListView)findViewById(R.id.txtList);
-
+        //list = (ListView)findViewById(R.id.txtList);
+        /*Log.d("RESULT", list.getAdapter().getCount() + "ggggggggggggggggggg");
+        for (int i=0 ; i<list.getAdapter().getCount();i++){
+            String st = list.getAdapter().getItem(i).toString();
+            String[] arr = st.split("\n");
+            Toast.makeText(this, arr[0], Toast.LENGTH_SHORT).show();
+        }*/
         etId = (EditText) findViewById(R.id.etId);
         btnRegist = (Button) findViewById(R.id.btnRegist);
         btnLogin =  (Button) findViewById(R.id.btnLogin);
@@ -38,19 +43,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent = new Intent(getApplicationContext(),JoinActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
                 startActivityForResult(intent,1000);
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener(){
-
             public void onClick(View v){
-
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                //intent.putExtra("id", etId.getText().toString());
-               // intent.putExtra("nickname", etNickname.getText().toString());
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
                 startActivityForResult(intent,1000);
             }
         });
@@ -59,16 +58,15 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        //new GetData(LoginActivity.this).execute();
         // setResult를 통해 받아온 요청번호, 상태, 데이터
-        Log.d("RESULT", requestCode + "");
-        Log.d("RESULT", resultCode + "");
-        Log.d("RESULT", data + "");
-       /* for (int i=0;i<)*/
-
-        String st = list.getAdapter().getItem(7).toString();
-        String[] arr = st.split("\n");
-        Toast.makeText(this, arr[0], Toast.LENGTH_SHORT).show();
+        list = (ListView)findViewById(R.id.txtList);
+        Log.d("RESULT", list.getAdapter().getCount() + "ggggggggggggggggggg");
+        for (int i=0 ; i<list.getAdapter().getCount();i++){
+            String st = list.getAdapter().getItem(i).toString();
+            String[] arr = st.split("\n");
+            Toast.makeText(this, arr[0], Toast.LENGTH_SHORT).show();
+        }
         if(requestCode == 1000 && resultCode == RESULT_OK) {
             Toast.makeText(LoginActivity.this, "회원가입을 완료했습니다!", Toast.LENGTH_SHORT).show();
             etId.setText(data.getStringExtra("ID"));
@@ -78,4 +76,16 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /*public void onStart(){
+        super.onStart();
+        new GetData(LoginActivity.this).execute();
+        list = (ListView)findViewById(R.id.txtList);
+        Log.d("RESULT", list.getAdapter().getCount() + "ggggggggggggggggggg");
+        for (int i=0 ; i<list.getAdapter().getCount();i++){
+            String st = list.getAdapter().getItem(i).toString();
+            String[] arr = st.split("\n");
+            Toast.makeText(this, arr[0], Toast.LENGTH_SHORT).show();
+        }
+        //Toast.makeText(this, list.getAdapter().getCount(), Toast.LENGTH_SHORT).show();
+    }*/
 }
