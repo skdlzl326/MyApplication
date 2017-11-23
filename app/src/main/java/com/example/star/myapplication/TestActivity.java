@@ -29,9 +29,12 @@ public class TestActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        /*TextView textView = (TextView)findViewById(R.id.profile);
-        etId = (EditText) findViewById(R.id.etId);
-        textView.setText(etId.getText().toString());*/
+/*
+        TextView textView = (TextView)findViewById(R.id.profile);
+        Intent intent =getIntent();
+        String username =intent.getStringExtra("username");
+        String nickname =intent.getStringExtra("nickname");
+        textView.setText(username +"|"+ nickname);*/
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

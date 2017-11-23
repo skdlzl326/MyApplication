@@ -43,8 +43,8 @@ public class GetData extends GetRequest {
         ListView txtList = (ListView)activity.findViewById(R.id.txtList);
         txtList.setAdapter(adapter);
         txtList.getAdapter();
-        Intent intent = new Intent(activity,LoginActivity.class);
-        intent.putExtra("user",arrayList.get(0).username);
+        /*Intent intent = new Intent(activity,LoginActivity.class);
+        intent.putExtra("user",arrayList.get(0).username);*/
     }
 
 

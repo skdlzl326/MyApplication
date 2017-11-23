@@ -23,46 +23,60 @@ public class LoginActivity extends AppCompatActivity {
     private ListView list;
     private Button btnRegist;
     private Button btnLogin;
+    private String username;
+    private String password;
+    private String nickname;
+    private String gender;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new GetData(LoginActivity.this).execute();
         setContentView(R.layout.activity_login);
 
-        etId =(EditText) findViewById(R.id.etId);
+        etId = (EditText) findViewById(R.id.etId);
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnRegist = (Button) findViewById(R.id.btnRegist);
-        btnLogin =  (Button) findViewById(R.id.btnLogin);
-        btnRegist.setOnClickListener(new View.OnClickListener(){
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnRegist.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View v){
+            public void onClick(View v) {
 
-                Intent intent = new Intent(getApplicationContext(),JoinActivity.class);
+                Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-                startActivityForResult(intent,1000);
+                startActivityForResult(intent, 1000);
             }
         });
-        btnLogin.setOnClickListener(new View.OnClickListener(){
+        btnLogin.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View v){
-                list = (ListView)findViewById(R.id.txtList);
-                boolean bool= false;
-                for (int i=0 ; i<list.getAdapter().getCount();i++){
+            public void onClick(View v) {
+                list = (ListView) findViewById(R.id.txtList);
+                boolean bool = false;
+                for (int i = 0; i < list.getAdapter().getCount(); i++) {
                     String st = list.getAdapter().getItem(i).toString();
                     String[] arr = st.split("\n");
-                    if(etId.getText().toString().equals(arr[0])==true && etPassword.getText().toString().equals(arr[1])==true){
-                        bool=true;
+                    if (etId.getText().toString().equals(arr[0]) == true && etPassword.getText().toString().equals(arr[1]) == true) {
+                        bool = true;
+                        username=arr[0];
+                        password=arr[1];
+                        nickname=arr[2];
+                        gender=arr[3];
                     }
                 }
-                if (bool==true){Intent intent = new Intent(getApplicationContext(),TestActivity.class);
+                if (bool == true) {
+                    Intent intent = new Intent(getApplicationContext(), TestActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivityForResult(intent,1000);
-                    Toast.makeText(LoginActivity.this, etId.getText().toString() +"님 환영합니다.", Toast.LENGTH_SHORT).show();
-                    bool=false;
-                }
-                else{
-                    Toast.makeText(LoginActivity.this, "아이디 및 비밀번호를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                    intent.putExtra("username",username);
+                    intent.putExtra("password",password);
+                    intent.putExtra("nickname",nickname);
+                    intent.putExtra("gender",gender);
+                    startActivityForResult(intent, 1000);
+                    Toast.makeText(LoginActivity.this, etId.getText().toString() + "님 환영합니다.", Toast.LENGTH_SHORT).show();
+                    bool = false;
+                } else {
+                    Toast.makeText(LoginActivity.this, "아이디 및 비밀번호를 확인해주세요!!", Toast.LENGTH_SHORT).show();
                     etId.requestFocus();
                 }
             }
@@ -74,17 +88,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         new GetData(LoginActivity.this).execute();
 
-        // setResult를 통해 받아온 요청번호, 상태, 데이터
-        Log.d("RESULT", requestCode + "");
-        Log.d("RESULT", resultCode + "");
-        Log.d("RESULT", data + "");
-
-
-
-        if(requestCode == 1000 && resultCode == RESULT_OK) {
+        if (requestCode == 1000 && resultCode == RESULT_OK) {
             Toast.makeText(LoginActivity.this, "회원가입을 완료했습니다!", Toast.LENGTH_SHORT).show();
             etId.setText(data.getStringExtra("ID"));
         }
     }
-
 }
+
