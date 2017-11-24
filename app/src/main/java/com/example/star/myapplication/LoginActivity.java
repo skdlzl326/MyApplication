@@ -15,6 +15,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etId;
     private EditText etPassword;
     private ListView list;
+    private ListView list2;
     private Button btnRegist;
     private Button btnLogin;
     private String username;
@@ -48,6 +49,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 list = (ListView) findViewById(R.id.txtList);
+                /*list2 = (ListView) findViewById(R.id.storelist);
+                Toast.makeText(LoginActivity.this,list2.getAdapter().getCount() , Toast.LENGTH_SHORT).show();*/
                 boolean bool = false;
                 for (int i = 0; i < list.getAdapter().getCount(); i++) {
                     String st = list.getAdapter().getItem(i).toString();

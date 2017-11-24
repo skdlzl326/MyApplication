@@ -23,7 +23,7 @@ public class GetStore extends GetRequest {
     protected void onPreExecute() {
         String serverURLStr = "http://52.79.216.222";
         try {
-            url = new URL(serverURLStr+"/get"+"-"+"store");  // http://serverURLStr/get-data
+            url = new URL(serverURLStr+"/get"+"-"+"store");  // http://serverURLStr/get-store
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -34,11 +34,11 @@ public class GetStore extends GetRequest {
             return;
         ArrayList<Store> arrayList = getArrayListFromJSONString(jsonString);
 
-        ArrayAdapter adapter = new ArrayAdapter(activity,
+        /*ArrayAdapter adapter = new ArrayAdapter(activity,
                 android.R.layout.simple_list_item_1,
-                arrayList.toArray());
-        //StoreAdapter adapter = new StoreAdapter(activity,arrayList);
-        ListView txtList = (ListView)activity.findViewById(R.id.txtList);
+                arrayList.toArray());*/
+        StoreAdapter adapter = new StoreAdapter(activity,arrayList);
+        ListView txtList = (ListView)activity.findViewById(R.id.storelist);
         txtList.setAdapter(adapter);
         txtList.getAdapter();
     }
@@ -46,20 +46,15 @@ public class GetStore extends GetRequest {
     protected ArrayList<Store> getArrayListFromJSONString(String jsonString) {
         ArrayList<Store> output = new ArrayList();
         try {
-
             JSONArray jsonArray = new JSONArray(jsonString);
-
             for (int i = 0; i < jsonArray.length(); i++) {
-
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-
-                Store store = new Store(jsonObject.getString("phonenumber"),
-                        jsonObject.getString("reservation"),
-                        jsonObject.getString("closetime"),
-                        jsonObject.getString("opentime"),
+                Store store = new Store(jsonObject.getString("title"),
+                        jsonObject.getString("kind"),
                         jsonObject.getString("address"),
-                        jsonObject.getString("title"),
-                        jsonObject.getString("kind"));
+                        jsonObject.getString("opentime"),
+                        jsonObject.getString("closetime"),
+                        jsonObject.getString("phonenumber"));
 
                 output.add(store);
             }

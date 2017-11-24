@@ -23,7 +23,7 @@ public class GetUser extends GetRequest {
     protected void onPreExecute() {
         String serverURLStr = "http://52.79.216.222";
         try {
-            url = new URL(serverURLStr+"/get"+"-"+"user");  // http://serverURLStr/get-data
+            url = new URL(serverURLStr+"/get"+"-"+"user");  // http://serverURLStr/get-store
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

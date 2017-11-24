@@ -29,10 +29,10 @@ public class StoreAdapter extends ArrayAdapter<Store> {
         TextView stkind = (TextView) convertView.findViewById(R.id.stkind);
         TextView staddress = (TextView) convertView.findViewById(R.id.staddress);
         ImageView ivPosterImage = (ImageView) convertView.findViewById(R.id.ivPosterImage);
-        // Populate the data into the template view using the data object
 
-        //Picasso.with(getContext()).load(store.getPosterUrl()).into(ivPosterImage);
-        // Return the completed view to render on screen
+        sttitle.setText(store.gettitle());
+        stkind.setText(store.getkind());
+        staddress.setText(store.getaddress());
         return convertView;
     }
 }
