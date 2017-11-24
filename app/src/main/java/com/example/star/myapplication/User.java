@@ -3,13 +3,13 @@ package com.example.star.myapplication;
 
 import java.io.Serializable;
 
-public class Book implements Serializable{
+public class User implements Serializable{
     String username;
     String password;
     String nickname;
     String gender;
 
-    public Book(String username, String password, String nickname, String gender) {
+    public User(String username, String password, String nickname, String gender) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;

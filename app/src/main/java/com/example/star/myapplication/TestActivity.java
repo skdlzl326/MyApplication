@@ -19,22 +19,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TestActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    //private EditText etId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-
-/*
-        TextView textView = (TextView)findViewById(R.id.profile);
-        Intent intent =getIntent();
-        String username =intent.getStringExtra("username");
-        String nickname =intent.getStringExtra("nickname");
-        textView.setText(username +"|"+ nickname);*/
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,14 +47,19 @@ public class TestActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        TextView textView = (TextView)findViewById(R.id.profile); // 슬라이딩 메뉴바에 아이디, 닉네임
+        TextView textView2 = (TextView)findViewById(R.id.profile2);
+        Intent intent2=getIntent();
+        String username =intent2.getStringExtra("username");
+        String nickname =intent2.getStringExtra("nickname");
+        textView.setText(username);
+        textView2.setText(nickname);
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.Search:
-                //getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,new MonthFrag()).commit();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -82,6 +80,7 @@ public class TestActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 

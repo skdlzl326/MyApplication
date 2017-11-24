@@ -23,7 +23,7 @@ public class dataFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.sample, container, false);
-
+        //new GetStore(getActivity()).execute();
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         viewPager.setAdapter(new sliderAdapter(getChildFragmentManager()));
         tabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);
@@ -39,7 +39,7 @@ public class dataFragment extends Fragment {
     }
     private class sliderAdapter extends FragmentPagerAdapter {
 
-        final  String tabs[]={"주변 맛집", "맛집 검색", "이달의 맛집"};
+        final  String tabs[]={"주변 맛집", "맛집 검색", "내 정보"};
         public sliderAdapter(FragmentManager fm) {
             super(fm);
         }

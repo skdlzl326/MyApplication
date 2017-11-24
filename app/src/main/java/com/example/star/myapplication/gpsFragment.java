@@ -150,7 +150,7 @@ public class gpsFragment extends Fragment
             }
             Address address = addressList.get(0);
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+            //googleMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
             googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
 
         }

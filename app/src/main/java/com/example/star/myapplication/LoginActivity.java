@@ -4,17 +4,11 @@ package com.example.star.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import junit.framework.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new GetData(LoginActivity.this).execute();
+        new GetUser(LoginActivity.this).execute();
         setContentView(R.layout.activity_login);
 
         etId = (EditText) findViewById(R.id.etId);
@@ -52,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+
                 list = (ListView) findViewById(R.id.txtList);
                 boolean bool = false;
                 for (int i = 0; i < list.getAdapter().getCount(); i++) {
@@ -86,8 +81,7 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        new GetData(LoginActivity.this).execute();
-
+        new GetUser(LoginActivity.this).execute();
         if (requestCode == 1000 && resultCode == RESULT_OK) {
             Toast.makeText(LoginActivity.this, "회원가입을 완료했습니다!", Toast.LENGTH_SHORT).show();
             etId.setText(data.getStringExtra("ID"));
