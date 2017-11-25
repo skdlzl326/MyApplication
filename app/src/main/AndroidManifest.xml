@@ -56,7 +56,7 @@
             android:name=".MainActivity"
             android:label="MainActivity" />
         <activity
-            android:name=".ReviewActivity"
+            android:name=".DetailActivity"
             android:label="ReviewActivity" />
         <activity
             android:name=".AddActivity"

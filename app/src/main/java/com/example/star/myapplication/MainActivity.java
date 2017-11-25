@@ -1,8 +1,6 @@
 package com.example.star.myapplication;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Uri uri = Uri.parse("https://store.naver.com/restaurants/detail?id=31676210&entry=plt&query=%EB%A9%94%EC%A2%85%EB%93%9C%EB%A3%A8%EC%A6%88");
-                Intent intent = new Intent(getApplicationContext(),ReviewActivity.class);
+                Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                // Uri uri = Uri.parse("https://store.naver.com/restaurants/detail?id=37420979");
-                Intent intent = new Intent(getApplicationContext(),ReviewActivity.class);
+                Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -39,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Uri uri = Uri.parse("https://store.naver.com/restaurants/detail?id=11716359");
-                Intent intent = new Intent(getApplicationContext(),ReviewActivity.class);
+                Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Uri uri = Uri.parse("https://store.naver.com/restaurants/detail?id=11569524&entry=plt&query=%EC%88%98%EC%97%B0%EC%82%B0%EB%B0%A9");
-                Intent intent = new Intent(getApplicationContext(),ReviewActivity.class);
+                Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Uri uri = Uri.parse("https://store.naver.com/restaurants/detail?id=37090281&entry=plt&query=%EC%9C%A4%ED%9C%98%EC%8B%9D%EB%8B%B9");
-                Intent intent = new Intent(getApplicationContext(),ReviewActivity.class);
+                Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
                 startActivity(intent);
             }
         });

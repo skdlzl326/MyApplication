@@ -35,7 +35,9 @@ public class Store implements Serializable{
         return title;
     }
     public String getaddress() {
-        return address;
+        String st = address;
+        String[] arr = st.split(" ");
+        return arr[0];
     }
     public String getopentime() {
         return opentime;

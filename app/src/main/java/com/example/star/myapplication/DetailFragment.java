@@ -1,5 +1,6 @@
 package com.example.star.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -10,8 +11,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class dataFragment extends Fragment {
+
+public class DetailFragment extends Fragment {
     View view;
     ViewPager viewPager;
     TabLayout tabLayout;
@@ -29,13 +33,13 @@ public class dataFragment extends Fragment {
                 tabLayout.setupWithViewPager(viewPager);
             }
         });
-        //tabLayout.setupWithViewPager(viewPager);
+
 
         return view;
     }
     private class sliderAdapter extends FragmentPagerAdapter {
 
-        final  String tabs[]={"주변 맛집", "맛집 검색", "내 정보"};
+        final  String tabs[]={"정보", "리뷰", "사진"};
         public sliderAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -44,7 +48,7 @@ public class dataFragment extends Fragment {
         public Fragment getItem(int position) {
 
             switch (position){
-                case 0:return new gpsFragment();
+                case 0:return new InfoFragment();
                 case 1:return new contentFragment();
                 case 2:return new contentFragment();
             }

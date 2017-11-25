@@ -30,7 +30,7 @@
             android:textStyle="bold"
             android:textColor="#111111"
             android:hint="The Dark Knight"
-            android:textSize="12sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/stkind"
@@ -40,7 +40,7 @@
             android:layout_below="@+id/sttitle"
             android:textColor="#111111"
             android:hint="91%"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <TextView
             android:id="@+id/staddress"
@@ -52,6 +52,42 @@
             android:ellipsize="end"
             android:hint="Christian Bale, Joseph-Gordon Levitt, Heath Ledger, Maggie Gylenhall"
             android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/stopentime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stkind"
+            android:ellipsize="end"
+            android:hint="Christian Bale, Joseph-Gordon Levitt, Heath Ledger, Maggie Gylenhall"
+            android:maxLines="1"
+            android:textColor="#111111"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/stclosetime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stkind"
+            android:ellipsize="end"
+            android:hint="Christian Bale, Joseph-Gordon Levitt, Heath Ledger, Maggie Gylenhall"
+            android:maxLines="1"
+            android:textColor="#111111"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/stphonenumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stkind"
+            android:ellipsize="end"
+            android:hint="Christian Bale, Joseph-Gordon Levitt, Heath Ledger, Maggie Gylenhall"
+            android:maxLines="1"
+            android:textColor="#111111"
+            android:textSize="12sp"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

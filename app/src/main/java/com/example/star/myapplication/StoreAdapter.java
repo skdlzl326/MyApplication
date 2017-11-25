@@ -28,11 +28,17 @@ public class StoreAdapter extends ArrayAdapter<Store> {
         TextView sttitle = (TextView) convertView.findViewById(R.id.sttitle);
         TextView stkind = (TextView) convertView.findViewById(R.id.stkind);
         TextView staddress = (TextView) convertView.findViewById(R.id.staddress);
+        TextView stopentime = (TextView) convertView.findViewById(R.id.stopentime);
+        TextView stclosetime = (TextView) convertView.findViewById(R.id.stclosetime);
+        TextView stphonenumber = (TextView) convertView.findViewById(R.id.stphonenumber);
         ImageView ivPosterImage = (ImageView) convertView.findViewById(R.id.ivPosterImage);
 
         sttitle.setText(store.gettitle());
         stkind.setText(store.getkind());
         staddress.setText(store.getaddress());
+        stopentime.setText(store.getopentime());
+        stclosetime.setText(store.getclosetime());
+        stphonenumber.setText(store.getphonenumber());
         return convertView;
     }
 }
