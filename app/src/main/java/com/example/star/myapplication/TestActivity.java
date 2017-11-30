@@ -24,7 +24,6 @@ import android.widget.Toast;
 public class TestActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,8 +74,6 @@ public class TestActivity extends AppCompatActivity
         }
     }
 
-
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -98,9 +95,7 @@ public class TestActivity extends AppCompatActivity
         } else if (id == R.id.nav_logout) {
             Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
             startActivityForResult(intent,1000);
-
         }
 
         return true;

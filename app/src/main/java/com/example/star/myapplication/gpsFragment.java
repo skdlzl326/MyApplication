@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -74,17 +75,12 @@ public class gpsFragment extends Fragment
     private static final String TAG = "googlemap_example";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 2002;
-   /* private static final int UPDATE_INTERVAL_MS = 40000; //15000
-    private static final int FASTEST_UPDATE_INTERVAL_MS = 15000;*/
     private MapView mapView = null;
     private GoogleMap googleMap = null;
     private GoogleApiClient googleApiClient = null;
     private Marker currentMarker = null;
-    private final static int MAXENTRIES = 5;
-   /* private String[] LikelyPlaceNames = null;
-    private String[] LikelyAddresses = null;
-    private String[] LikelyAttributions = null;
-    private LatLng[] LikelyLatLngs = null;*/
+    public String arr[];
+    public ListView listview;
 
 
     public gpsFragment()
@@ -104,7 +100,7 @@ public class gpsFragment extends Fragment
             markerOptions.snippet(markerSnippet);
             markerOptions.draggable(true);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-            currentMarker = this.googleMap.addMarker(markerOptions);
+            //currentMarker = this.googleMap.addMarker(markerOptions);
 
             this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
 
@@ -116,7 +112,7 @@ public class gpsFragment extends Fragment
         markerOptions.snippet(markerSnippet);
         markerOptions.draggable(true);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        currentMarker = this.googleMap.addMarker(markerOptions);
+        //currentMarker = this.googleMap.addMarker(markerOptions);
 
         this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(DEFAULT_LOCATION));
     }
@@ -125,19 +121,62 @@ public class gpsFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
 
     @Nullable
     @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        new GetStore2(getActivity()).execute();
         View layout = inflater.inflate(R.layout.fragment_gps, container, false);
+
         Button btn = (Button) layout.findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listview = (ListView)getActivity().findViewById(R.id.storelist);
+                //Toast.makeText(getActivity(), listview.getAdapter().getItem(0).toString(), Toast.LENGTH_LONG).show();
+                for (int i=0;i<listview.getAdapter().getCount();i++)
+                {
+                    String st = listview.getAdapter().getItem(i).toString();
+                    arr = st.split("\n");
+                    //Toast.makeText(getActivity(), arr[2], Toast.LENGTH_LONG).show();
+                    List<Address> addressList = null;
+                    if (arr[2] != null || !arr[2].equals("")) {
+                        Geocoder geocoder = new Geocoder(getActivity()); //this
+                        try {
+                            addressList = geocoder.getFromLocationName(arr[2], 1);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Address address = addressList.get(0);
+                        LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                        googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                                .position(latLng).title(arr[0]).snippet(arr[2]));
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                    }
+                }
+                googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
 
+                        for (int i=0;i<listview.getAdapter().getCount();i++){
+                            String st = listview.getAdapter().getItem(i).toString();
+                            arr = st.split("\n");
+                            if(marker.getTitle().equals(arr[0])){
+                                Intent intent = new Intent(getActivity(),DetailActivity.class);
+                                intent.putExtra("title",arr[0]);
+                                intent.putExtra("kind",arr[1]);
+                                intent.putExtra("address",arr[2]);
+                                intent.putExtra("opentime",arr[3]);
+                                intent.putExtra("closetime",arr[4]);
+                                intent.putExtra("phonenumber",arr[5]);
+                                startActivity(intent);
+                            }
+                        }
+
+                    }
+                });
         EditText location_tf = (EditText)getView().findViewById(R.id.TFaddress);
         String location = location_tf.getText().toString();
         List<Address> addressList = null;
@@ -150,17 +189,10 @@ public class gpsFragment extends Fragment
             }
             Address address = addressList.get(0);
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-            //googleMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
             googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-
         }
-        else{
-            Toast.makeText(getActivity(), "다시 입력해주세요", Toast.LENGTH_LONG).show();
-        }
-
             }
         });
-
 
         mapView = (MapView)layout.findViewById(R.id.map);
         mapView.getMapAsync(this);
@@ -233,14 +265,7 @@ public class gpsFragment extends Fragment
         }
 
     }
-    /*public void onDestroyView() {
-        super.onDestroyView();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.place_autocomplete_fragment);
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.remove(fragment);
-        fragmentTransaction.commit();
-    }*/
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

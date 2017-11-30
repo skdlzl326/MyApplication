@@ -24,19 +24,6 @@ public class DetailActivity extends AppCompatActivity{
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
         setFragment(new DetailFragment());
 
-        /*Intent intent=getIntent();
-        String title =intent.getStringExtra("title");
-        String kind =intent.getStringExtra("kind");
-        String address =intent.getStringExtra("address");
-        String opentime =intent.getStringExtra("opentime");
-        String closetime =intent.getStringExtra("closetime");
-        String phonenumber =intent.getStringExtra("phonenumber");
-
-        TextView textView = (TextView)findViewById(R.id.infokind);
-        TextView textView2 = (TextView)findViewById(R.id.infotitle);
-        textView.setText(title);
-        textView2.setText(kind);
-        Toast.makeText(this, title, Toast.LENGTH_LONG).show();*/
     }
 
     public void onStart(){
@@ -47,8 +34,7 @@ public class DetailActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {
-                Intent intent = new Intent(this, TestActivity.class);
-                startActivity(intent);
+                onBackPressed();
                 return true;
             }
         }

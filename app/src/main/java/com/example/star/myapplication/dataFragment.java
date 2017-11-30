@@ -18,8 +18,8 @@ public class dataFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //new GetStore2(getActivity()).execute();
         view = inflater.inflate(R.layout.sample, container, false);
-        //new GetStore(getActivity()).execute();
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         viewPager.setAdapter(new sliderAdapter(getChildFragmentManager()));
         tabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);

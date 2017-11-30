@@ -39,7 +39,7 @@ public class DetailFragment extends Fragment {
     }
     private class sliderAdapter extends FragmentPagerAdapter {
 
-        final  String tabs[]={"정보", "리뷰", "사진"};
+        final  String tabs[]={"정보", "리뷰"};
         public sliderAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -50,14 +50,13 @@ public class DetailFragment extends Fragment {
             switch (position){
                 case 0:return new InfoFragment();
                 case 1:return new contentFragment();
-                case 2:return new contentFragment();
             }
                 return null;
         }
 
         @Override
         public int getCount() {
-            return 3; // 탭의 개수
+            return 2; // 탭의 개수
         }
         @Override
         public CharSequence getPageTitle(int position) {
