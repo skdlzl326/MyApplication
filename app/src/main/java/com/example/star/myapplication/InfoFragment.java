@@ -1,5 +1,7 @@
 package com.example.star.myapplication;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.Manifest;
 import android.content.DialogInterface;
@@ -28,13 +30,19 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 
 public class InfoFragment extends Fragment {
 
     private String title;
     private String kind;
+    private String address;
+    private String opentime;
+    private String closetime;
+    private String phonenumber;
     private View container;
     @Nullable
     @Override
@@ -44,10 +52,10 @@ public class InfoFragment extends Fragment {
         Intent intent=getActivity().getIntent();
         title =intent.getStringExtra("title");
         kind =intent.getStringExtra("kind");
-        final String address =intent.getStringExtra("address");
-        String opentime =intent.getStringExtra("opentime");
-        String closetime =intent.getStringExtra("closetime");
-        final String phonenumber =intent.getStringExtra("phonenumber");
+        address =intent.getStringExtra("address");
+        opentime =intent.getStringExtra("opentime");
+        closetime =intent.getStringExtra("closetime");
+        phonenumber =intent.getStringExtra("phonenumber");
 
         TextView infotitle = (TextView)view.findViewById(R.id.infotitle);
         TextView infokind = (TextView)view.findViewById(R.id.infokind);
@@ -55,6 +63,7 @@ public class InfoFragment extends Fragment {
         TextView infotime = (TextView)view.findViewById(R.id.infotime);
         Button button1 = (Button)view.findViewById(R.id.callbtn);
         Button button2 = (Button)view.findViewById(R.id.sharebtn);
+        Button button3 = (Button)view.findViewById(R.id.reservbtn);
         Button.OnClickListener bClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,8 +168,23 @@ public class InfoFragment extends Fragment {
             }
         };
 
-        button1.setOnClickListener(bClickListener);
+        Button.OnClickListener cClickListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                new AlarmHATT(getActivity()).Alarm();
+                Toast.makeText(getActivity(), "예약이 완료됐습니다.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), Receiver.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra("title",title);
+                intent.putExtra("address",address);
+                intent.putExtra("nickname",opentime);
+                startActivityForResult(intent, 1000);
+            }
+        };
+
         button2.setOnClickListener(aClickListener);
+        button1.setOnClickListener(bClickListener);
+        button3.setOnClickListener(cClickListener);
 
         infotitle.setText(title);
         infokind.setText(kind);
@@ -183,6 +207,21 @@ public class InfoFragment extends Fragment {
             else{
                 Toast.makeText(getActivity(), "권한요청을 거부했습니다." , Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+    public class AlarmHATT { // Manifest 부분에 진동, 홀드상태 활성화 두개의 퍼미션 추가
+        Context context;
+        public AlarmHATT(Context context) {
+            this.context=context;
+        }
+        public void Alarm() {
+            AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(getActivity(), Receiver.class);
+            PendingIntent sender = PendingIntent.getBroadcast(getActivity(), 0, intent, 0 );
+            Calendar cal;
+            cal= Calendar.getInstance(Locale.KOREA);
+            //알람 예약
+            am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
         }
     }
 

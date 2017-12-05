@@ -68,6 +68,7 @@
             android:name=".TestActivity"
             android:label=""
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <receiver android:name=".Receiver"></receiver>
     </application>
 
 </manifest>
