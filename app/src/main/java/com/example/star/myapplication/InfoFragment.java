@@ -5,9 +5,12 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -22,19 +25,26 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.List;
 
 
 public class InfoFragment extends Fragment {
+
+    private String title;
+    private String kind;
+    private View container;
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //new GetStore(getActivity()).execute();
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.infoview,null);
+
         Intent intent=getActivity().getIntent();
-        String title =intent.getStringExtra("title");
-        String kind =intent.getStringExtra("kind");
-        String address =intent.getStringExtra("address");
+        title =intent.getStringExtra("title");
+        kind =intent.getStringExtra("kind");
+        final String address =intent.getStringExtra("address");
         String opentime =intent.getStringExtra("opentime");
         String closetime =intent.getStringExtra("closetime");
         final String phonenumber =intent.getStringExtra("phonenumber");
@@ -43,7 +53,8 @@ public class InfoFragment extends Fragment {
         TextView infokind = (TextView)view.findViewById(R.id.infokind);
         TextView infoaddress = (TextView)view.findViewById(R.id.infoaddress);
         TextView infotime = (TextView)view.findViewById(R.id.infotime);
-        Button button = (Button)view.findViewById(R.id.callbtn);
+        Button button1 = (Button)view.findViewById(R.id.callbtn);
+        Button button2 = (Button)view.findViewById(R.id.sharebtn);
         Button.OnClickListener bClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,14 +112,62 @@ public class InfoFragment extends Fragment {
 
             }
         };
-        button.setOnClickListener(bClickListener);
+        Button.OnClickListener aClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                container.buildDrawingCache();
+                Bitmap captureView = container.getDrawingCache();
+
+                String ad = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.jinsoo/Jinsoo" + "capture.jpeg";
+                FileOutputStream fos;
+                try{
+                    fos = new FileOutputStream(ad);
+                    captureView.compress(Bitmap.CompressFormat.JPEG,100,fos);
+                }catch (FileNotFoundException e){
+                    e.printStackTrace();
+                }
+
+                //Intent intent = new Intent();
+                Uri uri = Uri.fromFile(new File(ad));
+                Intent intent= new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_STREAM,uri);
+                intent.setType("image/*");
+                //intent.putExtra(Intent.EXTRA_SUBJECT, title);
+                //intent.putExtra(Intent.EXTRA_TEXT, kind);
+
+                PackageManager packManager = getActivity().getPackageManager(); // mcontext
+                List<ResolveInfo> resolvedInfoList = packManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+
+                boolean resolved = false;
+                for(ResolveInfo resolveInfo: resolvedInfoList) {
+                    if(resolveInfo.activityInfo.packageName.startsWith("com.facebook.katana")){
+                        intent.setClassName(
+                                resolveInfo.activityInfo.packageName,
+                                resolveInfo.activityInfo.name );
+                        resolved = true;
+                        break;
+                    }
+                }
+
+                if(resolved) {
+                    startActivity(Intent.createChooser(intent,"공유"));
+
+                } else {
+                    Toast.makeText(getActivity(), "페이스북 앱이 없습니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+        button1.setOnClickListener(bClickListener);
+        button2.setOnClickListener(aClickListener);
 
         infotitle.setText(title);
         infokind.setText(kind);
         infoaddress.setText(address);
         infotime.setText(opentime +" ~ "+closetime);
 
-      return view;
+        return view;
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

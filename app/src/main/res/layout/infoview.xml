@@ -81,13 +81,18 @@
                     android:text="바비레드는 12,000~18,000의 가격으로 선 결제로 음식을 받을 수 있습니다. 여기서 특이한 건 매운 맛을 조절할 수 있다는 점이 특이하고, 지하에 위치한 곳이라 생각하기에 아늑하게 느껴집니다."
                     android:textColor="#111111"
                     android:textSize="15dp" />
-
                 <Button
                     android:id="@+id/callbtn"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:background="@drawable/call" />
+                <Button
+                    android:id="@+id/sharebtn"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/share" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
