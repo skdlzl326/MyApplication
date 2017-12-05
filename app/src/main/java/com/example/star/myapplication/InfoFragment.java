@@ -173,12 +173,6 @@ public class InfoFragment extends Fragment {
             public void onClick(View v) {
                 new AlarmHATT(getActivity()).Alarm();
                 Toast.makeText(getActivity(), "예약이 완료됐습니다.", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), Receiver.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra("title",title);
-                intent.putExtra("address",address);
-                intent.putExtra("nickname",opentime);
-                startActivityForResult(intent, 1000);
             }
         };
 
@@ -217,6 +211,9 @@ public class InfoFragment extends Fragment {
         public void Alarm() {
             AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
             Intent intent = new Intent(getActivity(), Receiver.class);
+            intent.putExtra("title",title);
+            intent.putExtra("address",address);
+            intent.putExtra("opentime",opentime);
             PendingIntent sender = PendingIntent.getBroadcast(getActivity(), 0, intent, 0 );
             Calendar cal;
             cal= Calendar.getInstance(Locale.KOREA);

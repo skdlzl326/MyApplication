@@ -8,16 +8,16 @@ import android.content.Context;
 import android.content.Intent;
 
 public class Receiver extends BroadcastReceiver {
-    //Intent intent=getIntent();
 
     @Override
     public void onReceive(Context context, Intent intent) {//알람 시간이 되었을때 onReceive를 호출함
         //NotificationManager 안드로이드 상태바에 메세지를 던지기위한 서비스 불러오고
-
-
         NotificationManager notificationmanager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, LoginActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
         Notification.Builder builder = new Notification.Builder(context);
+        String title =intent.getStringExtra("title");
+        String address =intent.getStringExtra("address");
+        String time =intent.getStringExtra("opentime");
         builder.setSmallIcon(R.drawable.icon)
                 .setTicker("Fooriend")
                 .setWhen(System.currentTimeMillis())
@@ -29,10 +29,9 @@ public class Receiver extends BroadcastReceiver {
                 .setAutoCancel(true);
 
                 Notification.InboxStyle inboxStyle = new Notification.InboxStyle(builder);
-                inboxStyle.addLine("바비레드");
-                inboxStyle.addLine("한땀 한땀");
-                inboxStyle.addLine("고의 고의");
-                inboxStyle.addLine("적어드립니다.");
+                inboxStyle.addLine(title);
+                inboxStyle.addLine(address);
+                inboxStyle.addLine(time);
                 inboxStyle.setSummaryText("더 보기");
                 builder.setStyle(inboxStyle);
 
