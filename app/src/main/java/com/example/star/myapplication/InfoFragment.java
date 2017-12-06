@@ -1,7 +1,10 @@
 package com.example.star.myapplication;
 
 import android.app.AlarmManager;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.Manifest;
 import android.content.DialogInterface;
@@ -16,7 +19,9 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +30,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.io.File;
@@ -44,12 +50,22 @@ public class InfoFragment extends Fragment {
     private String closetime;
     private String phonenumber;
     private View container;
+    private int Starthour;
+    private int Startmin;
     private boolean onrestart=false;
-
+    private java.util.Calendar EditCal;
+    int EditYear;
+    int EditMonth;
+    int EditDay;
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.infoview,null);
+
+        EditCal = java.util.Calendar.getInstance(Locale.KOREA);
+        EditYear = EditCal.get(java.util.Calendar.YEAR);
+        EditMonth = EditCal.get(java.util.Calendar.MONTH);
+        EditDay = EditCal.get(java.util.Calendar.DAY_OF_MONTH);
 
         Intent intent=getActivity().getIntent();
         title =intent.getStringExtra("title");
@@ -65,10 +81,10 @@ public class InfoFragment extends Fragment {
         TextView infotime = (TextView)view.findViewById(R.id.infotime);
         Button button1 = (Button)view.findViewById(R.id.callbtn);
         Button button2 = (Button)view.findViewById(R.id.sharebtn);
-        Button button3 = (Button)view.findViewById(R.id.reservbtn);
         Button.OnClickListener bClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 onrestart = true;
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){ // 현재 버전 == 마시멜로우(M) 버전보다 높은지 확인
                     /**
@@ -171,17 +187,9 @@ public class InfoFragment extends Fragment {
             }
         };
 
-        Button.OnClickListener cClickListener = new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                new AlarmHATT(getActivity()).Alarm();
-                Toast.makeText(getActivity(), "예약이 완료됐습니다.", Toast.LENGTH_SHORT).show();
-            }
-        };
-
         button2.setOnClickListener(aClickListener);
         button1.setOnClickListener(bClickListener);
-        button3.setOnClickListener(cClickListener);
+
 
         infotitle.setText(title);
         infokind.setText(kind);
@@ -206,6 +214,8 @@ public class InfoFragment extends Fragment {
             }
         }
     }
+
+
     public class AlarmHATT { // Manifest 부분에 진동, 홀드상태 활성화 두개의 퍼미션 추가
         Context context;
         public AlarmHATT(Context context) {
@@ -216,23 +226,65 @@ public class InfoFragment extends Fragment {
             Intent intent = new Intent(getActivity(), Receiver.class);
             intent.putExtra("title",title);
             intent.putExtra("address",address);
-            intent.putExtra("opentime",opentime);
+            intent.putExtra("opentime",Starthour+"시 "+Startmin+"분");
             PendingIntent sender = PendingIntent.getBroadcast(getActivity(), 0, intent, 0 );
             Calendar cal;
             cal= Calendar.getInstance(Locale.KOREA);
+            cal.set(Calendar.YEAR,EditYear);
+            cal.set(Calendar.MONTH,EditMonth);
+            cal.set(Calendar.DAY_OF_MONTH,EditDay);
+            cal.set(Calendar.HOUR_OF_DAY, Starthour);
+            cal.set(Calendar.MINUTE, Startmin-30); //30분전 푸시알림
+            cal.set(Calendar.SECOND,00);
             //알람 예약
             am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
+            Toast.makeText(getActivity(), Starthour+"시 "+Startmin+"분"+"  예약 완료",Toast.LENGTH_LONG).show();
         }
+    }
+
+    void show()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("예약 확인");
+        builder.setMessage("예약을 하셨나요?");
+        builder.setPositiveButton("예",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity(),"예약시간을 입력해주세요",Toast.LENGTH_LONG).show();
+                        new TimePickerDialog(getActivity(),
+                                new TimePickerDialog.OnTimeSetListener() {
+                                    @Override
+                                    public void onTimeSet(TimePicker view,
+                                                          int hourOfDay, int minute) {
+                                        StartTime( hourOfDay,  minute);
+                                        new AlarmHATT(getActivity()).Alarm();
+
+                                    }
+                                }, // 값설정시 호출될 리스너 등록
+                                10,00, false).show();
+                    }
+
+                });
+        builder.setNegativeButton("아니오",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+        builder.show();
+
+    }
+
+    public void StartTime(int hourOfDay, int minute){
+        Starthour=hourOfDay;
+        Startmin=minute;
     }
 
     @Override
     public void onResume(){
         super.onResume();
         if (onrestart){
-            Toast.makeText(getActivity(), "예약 확인" , Toast.LENGTH_SHORT).show();
+            show();
             onrestart = false;
         }
     }
-
-
 }

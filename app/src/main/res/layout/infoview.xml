@@ -97,12 +97,6 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:background="@drawable/share" />
-                    <Button
-                        android:id="@+id/reservbtn"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/reservation" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
