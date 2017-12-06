@@ -13,7 +13,7 @@ public class Receiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {//알람 시간이 되었을때 onReceive를 호출함
         //NotificationManager 안드로이드 상태바에 메세지를 던지기위한 서비스 불러오고
         NotificationManager notificationmanager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, LoginActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, SplashActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
         Notification.Builder builder = new Notification.Builder(context);
         String title =intent.getStringExtra("title");
         String address =intent.getStringExtra("address");

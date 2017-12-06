@@ -44,6 +44,8 @@ public class InfoFragment extends Fragment {
     private String closetime;
     private String phonenumber;
     private View container;
+    private boolean onrestart=false;
+
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class InfoFragment extends Fragment {
         Button.OnClickListener bClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onrestart = true;
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){ // 현재 버전 == 마시멜로우(M) 버전보다 높은지 확인
                     /**
                      * 사용자 단말기의 권한 중 "전화걸기" 권한이 허용되어 있는지 체크한다.
@@ -221,5 +224,15 @@ public class InfoFragment extends Fragment {
             am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
         }
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if (onrestart){
+            Toast.makeText(getActivity(), "예약 확인" , Toast.LENGTH_SHORT).show();
+            onrestart = false;
+        }
+    }
+
 
 }
