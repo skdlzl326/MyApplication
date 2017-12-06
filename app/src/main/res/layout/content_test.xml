@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layout_scrollFlags="scroll|enterAlways"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.star.myapplication.TestActivity"
+    tools:context="com.example.star.myapplication.MainActivity"
     tools:showIn="@layout/app_bar_test">
 
     <FrameLayout

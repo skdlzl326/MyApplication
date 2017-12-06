@@ -53,19 +53,10 @@
             android:name=".JoinActivity"
             android:label="JoinActivity" />
         <activity
-            android:name=".MainActivity"
-            android:label="MainActivity" />
-        <activity
             android:name=".DetailActivity"
             android:label="ReviewActivity" />
         <activity
-            android:name=".AddActivity"
-            android:label="AddActivity" />
-        <activity
-            android:name=".SearchActivity"
-            android:label="SearchActivity" />
-        <activity
-            android:name=".TestActivity"
+            android:name=".MainActivity"
             android:label=""
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <receiver android:name=".Receiver"></receiver>

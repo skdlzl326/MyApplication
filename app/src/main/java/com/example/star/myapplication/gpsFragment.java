@@ -127,7 +127,7 @@ public class gpsFragment extends Fragment
     @Nullable
     @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        new GetStore2(getActivity()).execute();
+        new GetStore(getActivity()).execute();
         View layout = inflater.inflate(R.layout.fragment_gps, container, false);
 
         Button btn = (Button) layout.findViewById(R.id.button);

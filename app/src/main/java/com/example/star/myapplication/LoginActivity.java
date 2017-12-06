@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
                 if (bool == true) {
-                    Intent intent = new Intent(getApplicationContext(), TestActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intent.putExtra("username",username);
                     intent.putExtra("password",password);
