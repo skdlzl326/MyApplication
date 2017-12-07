@@ -11,9 +11,10 @@ public class Store implements Serializable{
     String closetime;
     String reservation;
     String phonenumber;
+    String description;
 
 
-    public Store(String title, String kind, String address, String opentime,String closetime ,String phonenumber) {
+    public Store(String title, String kind, String address, String opentime,String closetime ,String phonenumber, String description) {
 
         this.kind = kind;
         this.title = title;
@@ -21,12 +22,13 @@ public class Store implements Serializable{
         this.opentime = opentime;
         this.closetime = closetime;
         this.phonenumber = phonenumber;
+        this.description = description;
 
     }
 
     public String toString() {
 
-        return String.format("%s\n%s\n%s\n%s\n%s\n%s",title,kind,address,opentime,closetime,phonenumber);
+        return String.format("%s\n%s\n%s\n%s\n%s\n%s\n%s",title,kind,address,opentime,closetime,phonenumber,description);
     }
     public String getkind() {
         return kind;
@@ -48,4 +50,5 @@ public class Store implements Serializable{
     public String getphonenumber() {
         return phonenumber;
     }
+    public String getdescription() {return description; }
 }

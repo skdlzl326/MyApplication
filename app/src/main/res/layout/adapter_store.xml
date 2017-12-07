@@ -88,6 +88,17 @@
             android:textColor="#111111"
             android:textSize="12sp"
             android:visibility="gone" />
+        <TextView
+            android:id="@+id/stdescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stkind"
+            android:ellipsize="end"
+            android:hint="Christian Bale, Joseph-Gordon Levitt, Heath Ledger, Maggie Gylenhall"
+            android:maxLines="1"
+            android:textColor="#111111"
+            android:textSize="12sp"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

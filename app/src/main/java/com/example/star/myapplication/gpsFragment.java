@@ -171,6 +171,7 @@ public class gpsFragment extends Fragment
                                 intent.putExtra("opentime",arr[3]);
                                 intent.putExtra("closetime",arr[4]);
                                 intent.putExtra("phonenumber",arr[5]);
+                                intent.putExtra("description",arr[6]);
                                 startActivity(intent);
                             }
                         }

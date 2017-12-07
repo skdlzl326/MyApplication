@@ -25,12 +25,14 @@ public class StoreAdapter extends ArrayAdapter<Store> {
             convertView = inflater.inflate(R.layout.adapter_store, parent, false);
         }
         // Lookup views within item layout
+
         TextView sttitle = (TextView) convertView.findViewById(R.id.sttitle);
         TextView stkind = (TextView) convertView.findViewById(R.id.stkind);
         TextView staddress = (TextView) convertView.findViewById(R.id.staddress);
         TextView stopentime = (TextView) convertView.findViewById(R.id.stopentime);
         TextView stclosetime = (TextView) convertView.findViewById(R.id.stclosetime);
         TextView stphonenumber = (TextView) convertView.findViewById(R.id.stphonenumber);
+        TextView stdescription = (TextView) convertView.findViewById(R.id.stdescription);
         ImageView ivPosterImage = (ImageView) convertView.findViewById(R.id.ivPosterImage);
 
         sttitle.setText(store.gettitle());
@@ -39,6 +41,7 @@ public class StoreAdapter extends ArrayAdapter<Store> {
         stopentime.setText(store.getopentime());
         stclosetime.setText(store.getclosetime());
         stphonenumber.setText(store.getphonenumber());
+        stdescription.setText(store.getdescription());
         return convertView;
     }
 }

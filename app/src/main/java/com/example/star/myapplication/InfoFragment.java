@@ -49,6 +49,7 @@ public class InfoFragment extends Fragment {
     private String opentime;
     private String closetime;
     private String phonenumber;
+    private String description;
     private View container;
     private int Starthour;
     private int Startmin;
@@ -74,11 +75,14 @@ public class InfoFragment extends Fragment {
         opentime =intent.getStringExtra("opentime");
         closetime =intent.getStringExtra("closetime");
         phonenumber =intent.getStringExtra("phonenumber");
+        description =intent.getStringExtra("description");
 
         TextView infotitle = (TextView)view.findViewById(R.id.infotitle);
         TextView infokind = (TextView)view.findViewById(R.id.infokind);
         TextView infoaddress = (TextView)view.findViewById(R.id.infoaddress);
         TextView infotime = (TextView)view.findViewById(R.id.infotime);
+        TextView infodes = (TextView)view.findViewById(R.id.infodes);
+
         Button button1 = (Button)view.findViewById(R.id.callbtn);
         Button button2 = (Button)view.findViewById(R.id.sharebtn);
         Button.OnClickListener bClickListener = new View.OnClickListener() {
@@ -195,6 +199,8 @@ public class InfoFragment extends Fragment {
         infokind.setText(kind);
         infoaddress.setText(address);
         infotime.setText(opentime +" ~ "+closetime);
+        infodes.setText(description);
+
 
         return view;
     }
@@ -261,7 +267,7 @@ public class InfoFragment extends Fragment {
 
                                     }
                                 }, // 값설정시 호출될 리스너 등록
-                                10,00, false).show();
+                                12,00, false).show();
                     }
 
                 });
