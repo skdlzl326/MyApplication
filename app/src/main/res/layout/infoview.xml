@@ -95,11 +95,16 @@
                         android:background="@drawable/call" />
 
                     <Button
-                        android:id="@+id/sharebtn"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/share"/>
+                    android:id="@+id/sharebtn"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/share"/>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/testimage"
+                        android:src="@drawable/food7"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

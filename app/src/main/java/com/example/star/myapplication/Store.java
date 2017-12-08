@@ -12,6 +12,8 @@ public class Store implements Serializable{
     String reservation;
     String phonenumber;
     String description;
+    String images;
+    String writer;
 
 
     public Store(String title, String kind, String address, String opentime,String closetime ,String phonenumber, String description) {
@@ -23,6 +25,8 @@ public class Store implements Serializable{
         this.closetime = closetime;
         this.phonenumber = phonenumber;
         this.description = description;
+
+
 
     }
 

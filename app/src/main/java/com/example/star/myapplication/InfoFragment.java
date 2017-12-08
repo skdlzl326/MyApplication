@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,14 +29,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -50,7 +58,6 @@ public class InfoFragment extends Fragment {
     private String closetime;
     private String phonenumber;
     private String description;
-    private View container;
     private int Starthour;
     private int Startmin;
     private boolean onrestart=false;
@@ -58,6 +65,9 @@ public class InfoFragment extends Fragment {
     int EditYear;
     int EditMonth;
     int EditDay;
+
+    URL url;
+
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,11 +87,26 @@ public class InfoFragment extends Fragment {
         phonenumber =intent.getStringExtra("phonenumber");
         description =intent.getStringExtra("description");
 
+        ImageView testimage = (ImageView)view.findViewById(R.id.testimage);
         TextView infotitle = (TextView)view.findViewById(R.id.infotitle);
         TextView infokind = (TextView)view.findViewById(R.id.infokind);
         TextView infoaddress = (TextView)view.findViewById(R.id.infoaddress);
         TextView infotime = (TextView)view.findViewById(R.id.infotime);
         TextView infodes = (TextView)view.findViewById(R.id.infodes);
+        /*try {
+            url = new URL("http://52.79.216.222"+"/public"+"/images"+"/1.jpg");
+            URLConnection conn = url.openConnection();
+            conn.connect();
+            BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
+            Bitmap bm = BitmapFactory.decodeStream(bis);
+            bis.close();
+            testimage.setImageBitmap(bm);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
 
         Button button1 = (Button)view.findViewById(R.id.callbtn);
         Button button2 = (Button)view.findViewById(R.id.sharebtn);
@@ -159,16 +184,13 @@ public class InfoFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                //Intent intent = new Intent();
                 Uri uri = Uri.fromFile(new File(ad));
                 Intent intent= new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_STREAM,uri);
                 intent.setType("image/*");
-                //intent.putExtra(Intent.EXTRA_SUBJECT, title);
-                //intent.putExtra(Intent.EXTRA_TEXT, kind);
 
-                PackageManager packManager = getActivity().getPackageManager(); // mcontext
+                PackageManager packManager = getActivity().getPackageManager();
                 List<ResolveInfo> resolvedInfoList = packManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
 
                 boolean resolved = false;

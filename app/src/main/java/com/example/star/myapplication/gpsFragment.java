@@ -135,15 +135,13 @@ public class gpsFragment extends Fragment
             @Override
             public void onClick(View v) {
                 listview = (ListView)getActivity().findViewById(R.id.storelist);
-                //Toast.makeText(getActivity(), listview.getAdapter().getItem(0).toString(), Toast.LENGTH_LONG).show();
                 for (int i=0;i<listview.getAdapter().getCount();i++)
                 {
                     String st = listview.getAdapter().getItem(i).toString();
                     arr = st.split("\n");
-                    //Toast.makeText(getActivity(), arr[2], Toast.LENGTH_LONG).show();
                     List<Address> addressList = null;
                     if (arr[2] != null || !arr[2].equals("")) {
-                        Geocoder geocoder = new Geocoder(getActivity()); //this
+                        Geocoder geocoder = new Geocoder(getActivity());
                         try {
                             addressList = geocoder.getFromLocationName(arr[2], 1);
                         } catch (IOException e) {
@@ -320,6 +318,7 @@ public class gpsFragment extends Fragment
             }
 
             googleMap.setMyLocationEnabled(true);
+           
         }
 
 
