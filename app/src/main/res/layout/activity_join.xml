@@ -30,14 +30,6 @@
         android:ems="10"
         android:hint="패스워드 확인"
         android:id="@+id/etPasswordConfirm" />
-<!--
-    <EditText
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:ems="10"
-        android:hint="이름"
-        android:id="@+id/etName" />-->
 
     <EditText
         android:layout_width="300dp"

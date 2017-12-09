@@ -55,7 +55,8 @@ public class GetStore extends GetRequest {
                         jsonObject.getString("opentime"),
                         jsonObject.getString("closetime"),
                         jsonObject.getString("phonenumber"),
-                        jsonObject.getString("description"));
+                        jsonObject.getString("description"),
+                        jsonObject.getString("images"));
 
                 output.add(store);
             }

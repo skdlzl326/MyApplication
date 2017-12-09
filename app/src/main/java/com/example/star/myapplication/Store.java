@@ -16,7 +16,7 @@ public class Store implements Serializable{
     String writer;
 
 
-    public Store(String title, String kind, String address, String opentime,String closetime ,String phonenumber, String description) {
+    public Store(String title, String kind, String address, String opentime,String closetime ,String phonenumber, String description, String images) {
 
         this.kind = kind;
         this.title = title;
@@ -25,14 +25,14 @@ public class Store implements Serializable{
         this.closetime = closetime;
         this.phonenumber = phonenumber;
         this.description = description;
-
+        this.images = images;
 
 
     }
 
     public String toString() {
 
-        return String.format("%s\n%s\n%s\n%s\n%s\n%s\n%s",title,kind,address,opentime,closetime,phonenumber,description);
+        return String.format("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s",title,kind,address,opentime,closetime,phonenumber,description,images);
     }
     public String getkind() {
         return kind;
@@ -55,4 +55,5 @@ public class Store implements Serializable{
         return phonenumber;
     }
     public String getdescription() {return description; }
+    public String getimages() {return images; }
 }

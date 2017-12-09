@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class dataFragment extends Fragment {
+public class DataFragment extends Fragment {
     View view;
     ViewPager viewPager;
     TabLayout tabLayout;
@@ -45,8 +45,8 @@ public class dataFragment extends Fragment {
 
             switch (position){
                 case 0:return new gpsFragment();
-                case 1:return new contentFragment();
-                case 2:return new contentFragment();
+                case 1:return new ContentFragment();
+                case 2:return new ContentFragment();
             }
                 return null;
         }

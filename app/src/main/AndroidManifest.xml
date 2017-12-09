@@ -55,6 +55,10 @@
             android:name=".JoinActivity"
             android:label="JoinActivity" />
         <activity
+            android:name=".ReviewActivity"
+            android:theme="@style/AppTheme"
+            android:label="리뷰 작성" />
+        <activity
             android:name=".DetailActivity"
             android:label="ReviewActivity" />
         <activity

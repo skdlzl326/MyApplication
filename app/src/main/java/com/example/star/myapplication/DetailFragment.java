@@ -1,6 +1,5 @@
 package com.example.star.myapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -11,8 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class DetailFragment extends Fragment {
@@ -49,7 +46,7 @@ public class DetailFragment extends Fragment {
 
             switch (position){
                 case 0:return new InfoFragment();
-                case 1:return new contentFragment();
+                case 1:return new ReviewFragment();
             }
                 return null;
         }

@@ -1,8 +1,6 @@
 package com.example.star.myapplication;
 
 import android.app.AlarmManager;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -13,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,30 +20,24 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -58,7 +52,11 @@ public class InfoFragment extends Fragment {
     private String closetime;
     private String phonenumber;
     private String description;
+    private String images;
+    private String baseurl;
     private int Starthour;
+    private Drawable d;
+    private Bitmap bitmap;
     private int Startmin;
     private boolean onrestart=false;
     private java.util.Calendar EditCal;
@@ -71,7 +69,7 @@ public class InfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.infoview,null);
+        View view = inflater.inflate(R.layout.fragment_info,null);
 
         EditCal = java.util.Calendar.getInstance(Locale.KOREA);
         EditYear = EditCal.get(java.util.Calendar.YEAR);
@@ -86,27 +84,45 @@ public class InfoFragment extends Fragment {
         closetime =intent.getStringExtra("closetime");
         phonenumber =intent.getStringExtra("phonenumber");
         description =intent.getStringExtra("description");
+        images =intent.getStringExtra("images");
+        baseurl= "http://52.79.216.222/"+images;
 
-        ImageView testimage = (ImageView)view.findViewById(R.id.testimage);
+        LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.background);
         TextView infotitle = (TextView)view.findViewById(R.id.infotitle);
         TextView infokind = (TextView)view.findViewById(R.id.infokind);
         TextView infoaddress = (TextView)view.findViewById(R.id.infoaddress);
         TextView infotime = (TextView)view.findViewById(R.id.infotime);
         TextView infodes = (TextView)view.findViewById(R.id.infodes);
-        /*try {
-            url = new URL("http://52.79.216.222"+"/public"+"/images"+"/1.jpg");
-            URLConnection conn = url.openConnection();
-            conn.connect();
-            BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-            Bitmap bm = BitmapFactory.decodeStream(bis);
-            bis.close();
-            testimage.setImageBitmap(bm);
 
-        } catch (MalformedURLException e) {
+        Thread mThread = new Thread(){
+
+            @Override
+            public void run(){
+                try {
+                    url = new URL(baseurl);
+
+                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                    conn.setDoInput(true);
+                    conn.connect();
+
+                    InputStream is = conn.getInputStream();
+                    bitmap = BitmapFactory.decodeStream(is);
+                    d = new BitmapDrawable(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        };
+
+        mThread.start();
+        try {
+            mThread.join();
+            //testimage.setImageBitmap(bitmap);
+            linearLayout.setBackground(d);
+        } catch (InterruptedException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        }
 
         Button button1 = (Button)view.findViewById(R.id.callbtn);
         Button button2 = (Button)view.findViewById(R.id.sharebtn);
@@ -222,7 +238,6 @@ public class InfoFragment extends Fragment {
         infoaddress.setText(address);
         infotime.setText(opentime +" ~ "+closetime);
         infodes.setText(description);
-
 
         return view;
     }
