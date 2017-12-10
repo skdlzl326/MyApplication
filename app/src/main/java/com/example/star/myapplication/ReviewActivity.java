@@ -79,13 +79,13 @@ public class ReviewActivity extends AppCompatActivity {
                                 doTakePhotoAction();
                             }
                         })
-                        /*.setNegativeButton("앨범선택", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("앨범선택", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 doTakeAlbumAction();
                                 return;
                             }
-                        })*/
+                        })
                         .setNeutralButton("취소", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -123,7 +123,7 @@ public class ReviewActivity extends AppCompatActivity {
         // 앨범 호출
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-        //intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_FROM_ALBUM);
     }
 
@@ -139,6 +139,14 @@ public class ReviewActivity extends AppCompatActivity {
             case PICK_FROM_ALBUM:
             {
                 mImageCaptureUri = data.getData();
+                try {
+                    rotatePhoto();
+                    Bitmap image_bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                    iv_UserPhoto.setImageBitmap(image_bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
             }
 
             case PICK_FROM_CAMERA:
