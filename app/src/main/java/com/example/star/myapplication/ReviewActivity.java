@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,8 +26,11 @@ import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class ReviewActivity extends AppCompatActivity {
     private static final int PICK_FROM_CAMERA = 0;
@@ -33,6 +38,7 @@ public class ReviewActivity extends AppCompatActivity {
     private static final int CROP_FROM_IMAGE = 2;
     private Uri mImageCaptureUri;
     private ImageView iv_UserPhoto;
+    private String filePath;
     private int id_view;
     private String absoultePath;
 
@@ -73,13 +79,13 @@ public class ReviewActivity extends AppCompatActivity {
                                 doTakePhotoAction();
                             }
                         })
-                        .setNegativeButton("앨범선택", new DialogInterface.OnClickListener() {
+                        /*.setNegativeButton("앨범선택", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 doTakeAlbumAction();
                                 return;
                             }
-                        })
+                        })*/
                         .setNeutralButton("취소", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -108,7 +114,6 @@ public class ReviewActivity extends AppCompatActivity {
         // 임시로 사용할 파일의 경로를 생성
         String url = "tmp_" + String.valueOf(System.currentTimeMillis()) + ".jpg";
         mImageCaptureUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), url));
-
         intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
         startActivityForResult(intent, PICK_FROM_CAMERA);
     }
@@ -118,7 +123,7 @@ public class ReviewActivity extends AppCompatActivity {
         // 앨범 호출
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        //intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_FROM_ALBUM);
     }
 
@@ -134,28 +139,40 @@ public class ReviewActivity extends AppCompatActivity {
             case PICK_FROM_ALBUM:
             {
                 mImageCaptureUri = data.getData();
-                Log.d("SmartWheel",mImageCaptureUri.getPath().toString());
-
             }
 
             case PICK_FROM_CAMERA:
             {
-                Intent intent = new Intent("com.android.camera.action.CROP");
-                intent.setDataAndType(mImageCaptureUri, "image/*");
+                /*Intent intent = new Intent("com.android.camera.action.CROP");
+                intent.setDataAndType(mImageCaptureUri, "image*//*");
 
                 // CROP할 이미지를 200*200 크기로 저장
-                intent.putExtra("outputX", 200); // CROP한 이미지의 x축 크기
-                intent.putExtra("outputY", 200); // CROP한 이미지의 y축 크기
-                intent.putExtra("aspectX", 1); // CROP 박스의 X축 비율
-                intent.putExtra("aspectY", 1); // CROP 박스의 Y축 비율
+                intent.putExtra("outputX", 150); // CROP한 이미지의 x축 크기
+                intent.putExtra("outputY", 150); // CROP한 이미지의 y축 크기
+                *//*intent.putExtra("aspectX", 1); // CROP 박스의 X축 비율
+                intent.putExtra("aspectY", 1); // CROP 박스의 Y축 비율*//*
                 intent.putExtra("scale", true);
                 intent.putExtra("return-data", true);
-                startActivityForResult(intent, CROP_FROM_IMAGE); // CROP_FROM_CAMERA case문 이동
-                break;
 
+                startActivityForResult(intent, CROP_FROM_IMAGE); // CROP_FROM_CAMERA case문 이동*/
+                rotatePhoto();
+                Bitmap bitmap = getBitmap();
+                iv_UserPhoto.setImageBitmap(bitmap);
+
+                filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+
+                        "/Fooriend/"+System.currentTimeMillis()+".jpg";
+                storeCropImage(bitmap, filePath);
+
+                File f = new File(mImageCaptureUri.getPath());
+                if(f.exists())
+                {
+                    f.delete();
+                }
+                break;
             }
-            case CROP_FROM_IMAGE:
+            /*case CROP_FROM_IMAGE:
             {
+
                 if(resultCode != RESULT_OK) {
                     return;
                 }
@@ -163,12 +180,12 @@ public class ReviewActivity extends AppCompatActivity {
                 final Bundle extras = data.getExtras();
 
                 // CROP된 이미지를 저장하기 위한 FILE 경로
-                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+
+                filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+
                         "/Fooriend/"+System.currentTimeMillis()+".jpg";
 
                 if(extras != null)
                 {
-                    Bitmap photo = extras.getParcelable("data"); // CROP된 BITMAP
+                    Bitmap photo = (Bitmap) extras.getParcelable("data"); // CROP된 BITMAP
                     iv_UserPhoto.setImageBitmap(photo); // 레이아웃의 이미지칸에 CROP된 BITMAP을 보여줌
 
                     storeCropImage(photo, filePath); // CROP된 이미지를 외부저장소, 앨범에 저장한다.
@@ -182,8 +199,9 @@ public class ReviewActivity extends AppCompatActivity {
                 {
                     f.delete();
                 }
+                break;
 
-            }
+            }*/
         }
     }
 
@@ -201,7 +219,6 @@ public class ReviewActivity extends AppCompatActivity {
             out = new BufferedOutputStream(new FileOutputStream(copyFile));
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
 
-
             sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                     Uri.fromFile(copyFile)));
 
@@ -212,6 +229,125 @@ public class ReviewActivity extends AppCompatActivity {
         }
     }
 
+    public Bitmap getBitmap() {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inInputShareable = true;
+        options.inDither=false;
+        options.inTempStorage=new byte[32 * 1024];
+        options.inPurgeable = true;
+        options.inJustDecodeBounds = false;
+
+        File f = new File(mImageCaptureUri.getPath());
+
+        FileInputStream fs=null;
+        try {
+            fs = new FileInputStream(f);
+        } catch (FileNotFoundException e) {
+            //TODO do something intelligent
+            e.printStackTrace();
+        }
+
+        Bitmap bm = null;
+
+        try {
+            if(fs!=null) bm=BitmapFactory.decodeFileDescriptor(fs.getFD(), null, options);
+        } catch (IOException e) {
+            //TODO do something intelligent
+            e.printStackTrace();
+        } finally{
+            if(fs!=null) {
+                try {
+                    fs.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return bm;
+    }
+
+    public void rotatePhoto() {
+        ExifInterface exif;
+        try {
+            exif = new ExifInterface(mImageCaptureUri.getPath());
+            int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            int exifDegree = exifOrientationToDegrees(exifOrientation);
+            if(exifDegree != 0) {
+                Bitmap bitmap = getBitmap();
+                Bitmap rotatePhoto = rotate(bitmap, exifDegree);
+                saveBitmap(rotatePhoto);
+            }
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+    public int exifOrientationToDegrees(int exifOrientation)
+    {
+        if(exifOrientation == ExifInterface.ORIENTATION_ROTATE_90)
+        {
+            return 90;
+        }
+        else if(exifOrientation == ExifInterface.ORIENTATION_ROTATE_180)
+        {
+            return 180;
+        }
+        else if(exifOrientation == ExifInterface.ORIENTATION_ROTATE_270)
+        {
+            return 270;
+        }
+        return 0;
+    }
+
+    public static Bitmap rotate(Bitmap image, int degrees)
+    {
+        if(degrees != 0 && image != null)
+        {
+            Matrix m = new Matrix();
+            m.setRotate(degrees, (float)image.getWidth(), (float)image.getHeight());
+
+            try
+            {
+                Bitmap b = Bitmap.createBitmap(image, 0, 0, image.getWidth(), image.getHeight(), m, true);
+
+                if(image != b)
+                {
+                    image.recycle();
+                    image = b;
+                }
+
+                image = b;
+            }
+            catch(OutOfMemoryError ex)
+            {
+                ex.printStackTrace();
+            }
+        }
+        return image;
+    }
+
+    public void saveBitmap(Bitmap bitmap) {
+        File file = new File(mImageCaptureUri.getPath());
+        OutputStream out = null;
+        try {
+            out = new FileOutputStream(file);
+        }
+        catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out) ;
+        try {
+            out.close();
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onBackPressed() {

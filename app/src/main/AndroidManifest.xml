@@ -26,6 +26,7 @@
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="FoorienD"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
