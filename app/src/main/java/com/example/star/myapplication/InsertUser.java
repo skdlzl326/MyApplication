@@ -6,8 +6,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
-public class InsertData extends PostRequest {
-    public InsertData(Activity activity) {
+public class InsertUser extends PostRequest {
+    public InsertUser(Activity activity) {
         super(activity);
     }
 

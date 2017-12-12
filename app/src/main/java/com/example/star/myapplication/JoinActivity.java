@@ -98,7 +98,7 @@ public class JoinActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     Log.e(TAG, "JSONEXception");
                 }
-                new InsertData(JoinActivity.this).execute(postDataParam);
+                new InsertUser(JoinActivity.this).execute(postDataParam);
                 new GetUser(JoinActivity.this).execute();
 
 

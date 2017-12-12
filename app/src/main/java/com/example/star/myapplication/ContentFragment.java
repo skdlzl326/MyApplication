@@ -47,6 +47,7 @@ public class ContentFragment extends Fragment {
                 intent.putExtra("description",arr[6]);
                 intent.putExtra("images",arr[7]);
                 startActivity(intent);
+
             }
         });
 

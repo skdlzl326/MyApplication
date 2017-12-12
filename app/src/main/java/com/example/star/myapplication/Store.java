@@ -34,6 +34,7 @@ public class Store implements Serializable{
 
         return String.format("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s",title,kind,address,opentime,closetime,phonenumber,description,images);
     }
+
     public String getkind() {
         return kind;
     }

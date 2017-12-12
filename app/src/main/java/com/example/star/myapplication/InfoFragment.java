@@ -45,7 +45,7 @@ import java.util.Locale;
 
 public class InfoFragment extends Fragment {
 
-    private String title;
+    public static String title;
     private String kind;
     private String address;
     private String opentime;

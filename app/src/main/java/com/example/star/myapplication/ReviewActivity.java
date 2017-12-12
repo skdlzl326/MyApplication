@@ -138,14 +138,25 @@ public class ReviewActivity extends AppCompatActivity {
         {
             case PICK_FROM_ALBUM:
             {
+
                 mImageCaptureUri = data.getData();
+                rotatePhoto();
                 try {
-                    rotatePhoto();
                     Bitmap image_bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
                     iv_UserPhoto.setImageBitmap(image_bitmap);
+                    filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+
+                            "/Fooriend/"+System.currentTimeMillis()+".jpg";
+                    storeCropImage(image_bitmap, filePath);
+
+                    File f = new File(mImageCaptureUri.getPath());
+                    if(f.exists())
+                    {
+                        f.delete();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
                 break;
             }
 

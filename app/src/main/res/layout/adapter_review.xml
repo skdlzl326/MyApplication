@@ -1,6 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp" >
 
-</LinearLayout>
+    <RelativeLayout
+        android:paddingRight="7dp"
+        android:paddingLeft="7dp"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/stwriter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:hint="The Dark Knight"
+            android:textColor="#111111"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sttime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/stwriter"
+            android:layout_below="@+id/stwriter"
+            android:text="2017-12-12"
+            android:textColor="#646363"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/stgrade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sttime"
+            android:textColor="#000000"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:hint="4"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/ivPosterImage"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/stgrade"
+            android:layout_marginBottom="7dp"
+            android:layout_marginTop="6dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/food7" />
+
+        <TextView
+            android:id="@+id/stcontent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivPosterImage"
+            android:textColor="#000000"
+            android:paddingBottom="25dp"
+            android:text="너무 맛있어요 !!!! 근데 사람이 너무 많아서... 항상 기다려야 해요"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/ststorename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivPosterImage"
+            android:ellipsize="end"
+            android:hint="너무 맛있어요 !!!! 근데 사람이 너무 많아서... 항상 기다려야 해요"
+            android:maxLines="1"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/stimages2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivPosterImage"
+            android:ellipsize="end"
+            android:hint="너무 맛있어요 !!!! 근데 사람이 너무 많아서... 항상 기다려야 해요"
+            android:maxLines="1"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
