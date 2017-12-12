@@ -43,7 +43,7 @@ public class ReviewActivity extends AppCompatActivity {
     private static final int PICK_FROM_ALBUM = 1;
     private Uri mImageCaptureUri;
     private ImageView iv_UserPhoto;
-    private String filePath;
+    public String filePath;
     private int id_view;
     private String absoultePath;
     private String storename;
@@ -119,11 +119,12 @@ public class ReviewActivity extends AppCompatActivity {
                     postDataParam.put("storename", storename);
                     postDataParam.put("content",content );
                     postDataParam.put("writer", nickname);
-                    //postDataParam.put("images", Gender);
+                    postDataParam.put("images", iv_UserPhoto);
                 } catch (JSONException e) {
                     Log.e(TAG, "JSONEXception");
                 }
                 new InsertReview(ReviewActivity.this).execute(postDataParam);
+                new UploadFileHelper(ReviewActivity.this).execute(filePath);
                 Toast.makeText(this, "리뷰가 등록되었습니다.", Toast.LENGTH_LONG).show();
 
                 return true;

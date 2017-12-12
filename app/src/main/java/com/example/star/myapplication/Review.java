@@ -11,17 +11,17 @@ public class Review implements Serializable {
     String grade;
     String date;
 
-    public Review(String storename, String content, String writer,String images,String grade, String date) {
+    public Review(String grade, String storename, String content, String writer,String images,String date) {
+        this.grade = grade;
         this.storename = storename;
         this.content = content;
         this.writer = writer;
         this.images = images;
-        this.grade = grade;
         this.date = date;
     }
 
     public String toString() {
-        return String.format("%s\n%s\n%s\n%s",storename,content,writer,images,grade,date);
+        return String.format("%s\n%s\n%s\n%s\n%s\n%s",grade,storename,content,writer,images,date);
     }
 
     public String getStorename() {

@@ -49,11 +49,11 @@ public class GetReview extends GetRequest {
             JSONArray jsonArray = new JSONArray(jsonString);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                Review review = new Review(jsonObject.getString("storename"),
+                Review review = new Review(jsonObject.getString("grade"),
+                        jsonObject.getString("storename"),
                         jsonObject.getString("content"),
                         jsonObject.getString("writer"),
                         jsonObject.getString("images"),
-                        jsonObject.getString("grade"),
                         jsonObject.getString("date"));
 
                 if (jsonObject.getString("storename").equals(storename)){

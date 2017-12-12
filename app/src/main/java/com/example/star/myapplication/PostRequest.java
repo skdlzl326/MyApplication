@@ -77,8 +77,7 @@ public class PostRequest extends AsyncTask<JSONObject, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-          Toast.makeText(activity, result,
-                Toast.LENGTH_LONG).show();
+
     }
 
     private String getPostDataString(JSONObject params) throws Exception {
