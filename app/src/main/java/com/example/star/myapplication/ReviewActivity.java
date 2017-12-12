@@ -22,7 +22,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -33,21 +38,28 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class ReviewActivity extends AppCompatActivity {
+    final static String TAG = "AndroidNodeJS";
     private static final int PICK_FROM_CAMERA = 0;
     private static final int PICK_FROM_ALBUM = 1;
-    private static final int CROP_FROM_IMAGE = 2;
     private Uri mImageCaptureUri;
     private ImageView iv_UserPhoto;
     private String filePath;
     private int id_view;
     private String absoultePath;
+    private String storename;
+    private String content;
+    private String nickname;
+    private TextView reviewtext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
-        iv_UserPhoto= (ImageView)this.findViewById(R.id.uploadimage);
+        Intent intent=this.getIntent();
+        storename= intent.getStringExtra("title");
+        nickname= intent.getStringExtra("nickname");
+        iv_UserPhoto= (ImageView)findViewById(R.id.uploadimage);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(0xFF6CC6AD));
@@ -99,7 +111,21 @@ public class ReviewActivity extends AppCompatActivity {
             }
 
             case R.id.post: {
+                reviewtext=(TextView)findViewById(R.id.reviewtext);
+                content= reviewtext.getText().toString();
+                JSONObject postDataParam = new JSONObject();
+                try {
+                    postDataParam.put("grade", "sdsd");
+                    postDataParam.put("storename", storename);
+                    postDataParam.put("content",content );
+                    postDataParam.put("writer", nickname);
+                    //postDataParam.put("images", Gender);
+                } catch (JSONException e) {
+                    Log.e(TAG, "JSONEXception");
+                }
+                new InsertReview(ReviewActivity.this).execute(postDataParam);
                 Toast.makeText(this, "리뷰가 등록되었습니다.", Toast.LENGTH_LONG).show();
+
                 return true;
             }
 
@@ -162,18 +188,6 @@ public class ReviewActivity extends AppCompatActivity {
 
             case PICK_FROM_CAMERA:
             {
-                /*Intent intent = new Intent("com.android.camera.action.CROP");
-                intent.setDataAndType(mImageCaptureUri, "image*//*");
-
-                // CROP할 이미지를 200*200 크기로 저장
-                intent.putExtra("outputX", 150); // CROP한 이미지의 x축 크기
-                intent.putExtra("outputY", 150); // CROP한 이미지의 y축 크기
-                *//*intent.putExtra("aspectX", 1); // CROP 박스의 X축 비율
-                intent.putExtra("aspectY", 1); // CROP 박스의 Y축 비율*//*
-                intent.putExtra("scale", true);
-                intent.putExtra("return-data", true);
-
-                startActivityForResult(intent, CROP_FROM_IMAGE); // CROP_FROM_CAMERA case문 이동*/
                 rotatePhoto();
                 Bitmap bitmap = getBitmap();
                 iv_UserPhoto.setImageBitmap(bitmap);
@@ -189,38 +203,6 @@ public class ReviewActivity extends AppCompatActivity {
                 }
                 break;
             }
-            /*case CROP_FROM_IMAGE:
-            {
-
-                if(resultCode != RESULT_OK) {
-                    return;
-                }
-
-                final Bundle extras = data.getExtras();
-
-                // CROP된 이미지를 저장하기 위한 FILE 경로
-                filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+
-                        "/Fooriend/"+System.currentTimeMillis()+".jpg";
-
-                if(extras != null)
-                {
-                    Bitmap photo = (Bitmap) extras.getParcelable("data"); // CROP된 BITMAP
-                    iv_UserPhoto.setImageBitmap(photo); // 레이아웃의 이미지칸에 CROP된 BITMAP을 보여줌
-
-                    storeCropImage(photo, filePath); // CROP된 이미지를 외부저장소, 앨범에 저장한다.
-                    absoultePath = filePath;
-                    break;
-
-                }
-                // 임시 파일 삭제
-                File f = new File(mImageCaptureUri.getPath());
-                if(f.exists())
-                {
-                    f.delete();
-                }
-                break;
-
-            }*/
         }
     }
 

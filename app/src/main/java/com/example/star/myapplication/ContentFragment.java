@@ -24,12 +24,15 @@ import java.net.URL;
 
 public class ContentFragment extends Fragment {
     private ListView listview;
+    private String nickname;
 
     String[] arr;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         new GetStore(getActivity()).execute();
+        Intent intent=getActivity().getIntent();
+        nickname =intent.getStringExtra("nickname");
         View view = inflater.inflate(R.layout.storelistview,null);
         listview = (ListView)view.findViewById(R.id.storelist);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -46,6 +49,7 @@ public class ContentFragment extends Fragment {
                 intent.putExtra("phonenumber",arr[5]);
                 intent.putExtra("description",arr[6]);
                 intent.putExtra("images",arr[7]);
+                intent.putExtra("nickname",nickname);
                 startActivity(intent);
 
             }

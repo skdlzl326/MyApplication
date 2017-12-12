@@ -8,12 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class ReviewFragment extends Fragment {
+    private String title;
+    private String nickname;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        String title;
+
         Intent intent=getActivity().getIntent();
         title =intent.getStringExtra("title");
+        nickname = intent.getStringExtra("nickname");
         new GetReview(getActivity(),title).execute();
         View view = inflater.inflate(R.layout.fragment_review,null);
 
@@ -22,6 +26,8 @@ public class ReviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ReviewActivity.class);
+                intent.putExtra("title",title);
+                intent.putExtra("nickname",nickname);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }

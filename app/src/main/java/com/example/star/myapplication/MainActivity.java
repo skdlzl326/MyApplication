@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private String nickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         TextView textView2 = (TextView)findViewById(R.id.profile2);
         Intent intent2=getIntent();
         String username =intent2.getStringExtra("username");
-        String nickname =intent2.getStringExtra("nickname");
+        nickname =intent2.getStringExtra("nickname");
         textView.setText(username);
         textView2.setText(nickname);
         return true;
