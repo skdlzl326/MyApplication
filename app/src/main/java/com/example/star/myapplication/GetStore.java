@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class GetStore extends GetRequest {
     public GetStore(Activity activity) {
-        super(activity);
+        super(activity,null);
     }
 
     @Override

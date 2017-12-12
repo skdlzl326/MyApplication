@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class GetUser extends GetRequest {
     public GetUser(Activity activity) {
-        super(activity);
+        super(activity,null);
     }
 
     @Override

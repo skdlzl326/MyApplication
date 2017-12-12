@@ -11,8 +11,10 @@ import android.widget.Button;
 
 public class ReviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        new GetReview(getActivity()).execute();
+        String title;
+        Intent intent=getActivity().getIntent();
+        title =intent.getStringExtra("title");
+        new GetReview(getActivity(),title).execute();
         View view = inflater.inflate(R.layout.fragment_review,null);
 
         Button btn = (Button)view.findViewById(R.id.btnwrite);

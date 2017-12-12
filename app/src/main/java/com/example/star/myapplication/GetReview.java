@@ -12,8 +12,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 public class GetReview extends GetRequest {
-    public GetReview(Activity activity) {
-        super(activity);
+    public String storename;
+
+    public GetReview(Activity activity, String storename) {
+        super(activity, storename);
+        this.storename= storename;
     }
 
     @Override
@@ -53,7 +56,9 @@ public class GetReview extends GetRequest {
                         jsonObject.getString("grade"),
                         jsonObject.getString("date"));
 
-                output.add(review);
+                if (jsonObject.getString("storename").equals(storename)){
+                    output.add(review);
+                }
             }
 
         } catch (JSONException e) {

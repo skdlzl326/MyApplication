@@ -16,8 +16,11 @@ abstract public class GetRequest extends AsyncTask<String, Void, String> {
     final static String TAG = "AndroidNodeJS";
     Activity activity;
     URL url;
+    String storename;
 
-    public GetRequest(Activity activity) {
+    public GetRequest(Activity activity, String storename)
+    {
+        this.storename= storename;
         this.activity = activity;
     }
 
