@@ -1,6 +1,5 @@
 package com.example.star.myapplication;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,19 +14,11 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -50,6 +41,8 @@ public class ReviewActivity extends AppCompatActivity {
     private String content;
     private String nickname;
     private TextView reviewtext;
+    final int REQUEST_READ_FROM_EXTERNAL_STORAGE = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,18 +106,19 @@ public class ReviewActivity extends AppCompatActivity {
             case R.id.post: {
                 reviewtext=(TextView)findViewById(R.id.reviewtext);
                 content= reviewtext.getText().toString();
-                JSONObject postDataParam = new JSONObject();
+                /*JSONObject postDataParam = new JSONObject();
                 try {
                     postDataParam.put("grade", "sdsd");
                     postDataParam.put("storename", storename);
                     postDataParam.put("content",content );
                     postDataParam.put("writer", nickname);
-                    postDataParam.put("images", iv_UserPhoto);
+                    //postDataParam.put("images", iv_UserPhoto);
                 } catch (JSONException e) {
                     Log.e(TAG, "JSONEXception");
-                }
-                new InsertReview(ReviewActivity.this).execute(postDataParam);
-                new UploadFileHelper(ReviewActivity.this).execute(filePath);
+                }*/
+                //new InsertReview(ReviewActivity.this).execute(postDataParam);
+
+                new UploadReviewHelper(ReviewActivity.this,"4",storename,content,nickname).execute(filePath);
                 Toast.makeText(this, "리뷰가 등록되었습니다.", Toast.LENGTH_LONG).show();
 
                 return true;
@@ -336,16 +330,14 @@ public class ReviewActivity extends AppCompatActivity {
         OutputStream out = null;
         try {
             out = new FileOutputStream(file);
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out) ;
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
         try {
             out.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

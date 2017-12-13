@@ -1,6 +1,7 @@
 package com.example.star.myapplication;
 
 import android.app.Activity;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -13,22 +14,30 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class UploadFileHelper extends AsyncTask<String, String, String> {
+public class UploadReviewHelper extends AsyncTask<String, String, String> {
     final String serverURL = "http://52.79.216.222";
+    public String storename;
+    private String grade;
+    private String content;
+    private String nickname;
 
 
     final String upLoadServerUri = serverURL + "/review";
     Activity activity;
 
-    public UploadFileHelper(Activity activity) {
+    public UploadReviewHelper(Activity activity, String grade,String storename,String content,String nickname) {
+        this.grade = grade;
+        this.storename = storename;
+        this.content = content;
+        this.nickname = nickname;
         this.activity = activity;
     }
 
 
     @Override
-    protected String doInBackground(String... objects) {
+    protected String doInBackground(String... filepath) {
 
-        String fileName = objects[0];
+        String fileName = filepath[0];
 
         HttpURLConnection conn = null;
         DataOutputStream dos = null;
@@ -54,15 +63,21 @@ public class UploadFileHelper extends AsyncTask<String, String, String> {
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Connection", "Keep-Alive");
             conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-            conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-            conn.setRequestProperty("uploaded_file", fileName);
+            conn.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ boundary);
+            conn.setRequestProperty("images", fileName);
 
             dos = new DataOutputStream(conn.getOutputStream());
-
             dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
+            dos.writeBytes("Content-Disposition: form-data; name=\"grade\"\r\n\r\n"+ grade + lineEnd);
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"storename\"\r\n\r\n"+ storename + lineEnd);
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"content\"\r\n\r\n"+ content + lineEnd);
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"nickname\"\r\n\r\n"+ nickname + lineEnd);
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"images\";filename=\""
                     + fileName + "\"" + lineEnd);
-
             dos.writeBytes(lineEnd);
 
             // create a buffer of  maximum size
@@ -96,7 +111,7 @@ public class UploadFileHelper extends AsyncTask<String, String, String> {
 
             StringBuilder response;
             if (serverResponseCode == 200) {
-                BufferedReader input = new BufferedReader(new InputStreamReader(conn.getInputStream()), 8192);
+                BufferedReader input = new BufferedReader(new InputStreamReader(conn.getInputStream(), "euc-kr"));
                 response = new StringBuilder();
                 String strLine = null;
                 while ((strLine = input.readLine()) != null)
