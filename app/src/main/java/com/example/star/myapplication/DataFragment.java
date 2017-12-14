@@ -35,7 +35,7 @@ public class DataFragment extends Fragment {
     }
     private class sliderAdapter extends FragmentPagerAdapter {
 
-        final  String tabs[]={"주변 맛집", "맛집 검색", "내 정보"};
+        final  String tabs[]={"주변 맛집", "맛집 검색"};
         public sliderAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -46,14 +46,13 @@ public class DataFragment extends Fragment {
             switch (position){
                 case 0:return new gpsFragment();
                 case 1:return new ContentFragment();
-                case 2:return new ContentFragment();
             }
                 return null;
         }
 
         @Override
         public int getCount() {
-            return 3; // 탭의 개수
+            return 2; // 탭의 개수
         }
         @Override
         public CharSequence getPageTitle(int position) {

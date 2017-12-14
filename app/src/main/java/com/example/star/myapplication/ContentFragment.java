@@ -30,7 +30,6 @@ public class ContentFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        new GetStore(getActivity()).execute();
         Intent intent=getActivity().getIntent();
         nickname =intent.getStringExtra("nickname");
         View view = inflater.inflate(R.layout.storelistview,null);
@@ -51,10 +50,14 @@ public class ContentFragment extends Fragment {
                 intent.putExtra("images",arr[7]);
                 intent.putExtra("nickname",nickname);
                 startActivity(intent);
-
             }
         });
-
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        new GetStore(getActivity()).execute();
     }
 }

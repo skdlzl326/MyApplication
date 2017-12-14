@@ -40,7 +40,9 @@ public class ReviewActivity extends AppCompatActivity {
     private String storename;
     private String content;
     private String nickname;
+    private String grade;
     private TextView reviewtext;
+    private TextView reviewtext2;
     final int REQUEST_READ_FROM_EXTERNAL_STORAGE = 1;
 
 
@@ -105,19 +107,11 @@ public class ReviewActivity extends AppCompatActivity {
 
             case R.id.post: {
                 reviewtext=(TextView)findViewById(R.id.reviewtext);
+                reviewtext2=(TextView)findViewById(R.id.reviewtext2);
                 content= reviewtext.getText().toString();
-                /*JSONObject postDataParam = new JSONObject();
-                try {
-                    postDataParam.put("grade", "sdsd");
-                    postDataParam.put("storename", storename);
-                    postDataParam.put("content",content );
-                    postDataParam.put("writer", nickname);
-                    //postDataParam.put("images", iv_UserPhoto);
-                } catch (JSONException e) {
-                    Log.e(TAG, "JSONEXception");
-                }*/
-                //new InsertReview(ReviewActivity.this).execute(postDataParam);
-                new UploadReviewHelper(ReviewActivity.this,"4",storename,content,nickname).execute(filePath);
+                grade= reviewtext2.getText().toString();
+
+                new UploadReviewHelper(ReviewActivity.this,grade,storename,content,nickname).execute(filePath);
                 Toast.makeText(this, "리뷰가 등록되었습니다.", Toast.LENGTH_LONG).show();
 
                 return true;

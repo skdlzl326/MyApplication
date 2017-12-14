@@ -149,7 +149,7 @@ public class gpsFragment extends Fragment
                         }
                         Address address = addressList.get(0);
                         LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                        googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                        googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.foodicon))
                                 .position(latLng).title(arr[0]).snippet(arr[2]));
                         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
                     }
