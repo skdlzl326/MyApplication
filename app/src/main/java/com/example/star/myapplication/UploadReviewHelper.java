@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 public class UploadReviewHelper extends AsyncTask<String, String, String> {
     final String serverURL = "http://52.79.216.222";
@@ -63,18 +64,27 @@ public class UploadReviewHelper extends AsyncTask<String, String, String> {
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Connection", "Keep-Alive");
             conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+            conn.setRequestProperty("Accept-Charset","euc-kr");
             conn.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ boundary);
             conn.setRequestProperty("images", fileName);
 
             dos = new DataOutputStream(conn.getOutputStream());
             dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=\"grade\"\r\n\r\n"+ grade + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"grade\"\r\n\r\n");
+            dos.write(grade.getBytes(Charset.forName("UTF-8")));
+            dos.writeBytes(lineEnd);
             dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=\"storename\"\r\n\r\n"+ storename + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"storename\"\r\n\r\n");
+            dos.write(storename.getBytes(Charset.forName("UTF-8")));
+            dos.writeBytes(lineEnd);
             dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=\"content\"\r\n\r\n"+ content + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"content\"\r\n\r\n");
+            dos.write(content.getBytes(Charset.forName("UTF-8")));
+            dos.writeBytes(lineEnd);
             dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=\"nickname\"\r\n\r\n"+ nickname + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"nickname\"\r\n\r\n");
+            dos.write(nickname.getBytes(Charset.forName("UTF-8")));
+            dos.writeBytes(lineEnd);
             dos.writeBytes(twoHyphens + boundary + lineEnd);
             dos.writeBytes("Content-Disposition: form-data; name=\"images\";filename=\""
                     + fileName + "\"" + lineEnd);
@@ -111,7 +121,7 @@ public class UploadReviewHelper extends AsyncTask<String, String, String> {
 
             StringBuilder response;
             if (serverResponseCode == 200) {
-                BufferedReader input = new BufferedReader(new InputStreamReader(conn.getInputStream(), "euc-kr"));
+                BufferedReader input = new BufferedReader(new InputStreamReader(conn.getInputStream(), "cp949"));
                 response = new StringBuilder();
                 String strLine = null;
                 while ((strLine = input.readLine()) != null)

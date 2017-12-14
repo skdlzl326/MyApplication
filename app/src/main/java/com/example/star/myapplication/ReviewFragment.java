@@ -18,7 +18,6 @@ public class ReviewFragment extends Fragment {
         Intent intent=getActivity().getIntent();
         title =intent.getStringExtra("title");
         nickname = intent.getStringExtra("nickname");
-        new GetReview(getActivity(),title).execute();
         View view = inflater.inflate(R.layout.fragment_review,null);
 
         Button btn = (Button)view.findViewById(R.id.btnwrite);
@@ -35,5 +34,11 @@ public class ReviewFragment extends Fragment {
         btn.setOnClickListener(bClickListener);
         return view;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        new GetReview(getActivity(),title).execute();
+    }
+
 
 }
