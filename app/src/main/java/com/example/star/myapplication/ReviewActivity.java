@@ -117,8 +117,8 @@ public class ReviewActivity extends AppCompatActivity {
                     Log.e(TAG, "JSONEXception");
                 }*/
                 //new InsertReview(ReviewActivity.this).execute(postDataParam);
-
                 new UploadReviewHelper(ReviewActivity.this,"4",storename,content,nickname).execute(filePath);
+                //new GetReview(ReviewActivity.this,storename).execute();
                 Toast.makeText(this, "리뷰가 등록되었습니다.", Toast.LENGTH_LONG).show();
 
                 return true;
