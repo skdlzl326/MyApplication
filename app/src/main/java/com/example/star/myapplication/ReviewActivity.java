@@ -118,7 +118,6 @@ public class ReviewActivity extends AppCompatActivity {
                 }*/
                 //new InsertReview(ReviewActivity.this).execute(postDataParam);
                 new UploadReviewHelper(ReviewActivity.this,"4",storename,content,nickname).execute(filePath);
-                //new GetReview(ReviewActivity.this,storename).execute();
                 Toast.makeText(this, "리뷰가 등록되었습니다.", Toast.LENGTH_LONG).show();
 
                 return true;
@@ -213,7 +212,7 @@ public class ReviewActivity extends AppCompatActivity {
         try {
             copyFile.createNewFile();
             out = new BufferedOutputStream(new FileOutputStream(copyFile));
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 7, out);
 
             sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                     Uri.fromFile(copyFile)));
@@ -334,7 +333,7 @@ public class ReviewActivity extends AppCompatActivity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 60, out);
         try {
             out.close();
         } catch (IOException e) {
